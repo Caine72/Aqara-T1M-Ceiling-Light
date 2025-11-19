@@ -6,7 +6,8 @@ Place the file in the folder zigbee2mqtt/data/external_converters and restart Zi
 
 Notes:
 
-
+  • RGB ring segments are not passed through to Home Assistant yet, they must be defined in Zigbee2MQTT for now. Possibly an HA blueprint will be added to achieve this.
+  
   • This converter mimics the dynamic RGB effect creation and preview feature of the Aqara Home app.
   
   • The dynamic RGB effects are not written as scenes to the light's memory as they are when using the Aqara app. That process is done via OTA firmware writes which are not implemented here.
