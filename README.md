@@ -2,7 +2,7 @@
 Zigbee2MQTT external converter for Aqara T1M Ceiling Light with RGB ring light segment control and dynamic effects
 
 Installation:
-Place the file t1m.mjs in the folder zigbee2mqtt/data/external_converters and restart Zigbee2MQTT
+In Zigbee2MQTT go to settings>>dev console>>external converters, create a new converter named t1m.mjs and paste in the contents of the file. Click save then restart Zigbee2MQTT via settings>>tools
 
 The file aqara-t1m-ring-segments.yaml is a Home Assistant blueprint to control the RGB ring light segments. Import the file into HA blueprints/script.
 
