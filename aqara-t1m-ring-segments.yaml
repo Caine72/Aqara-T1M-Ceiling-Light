@@ -1,0 +1,276 @@
+blueprint:
+  name: Aqara T1M Ceiling Light - RGB Ring Segment Colors
+  description: >
+    Control each of the 26 individual ring segments on the Aqara T1M Ceiling Light ring with custom colors. 
+    Each segment can be set to any color using a color picker, set the color to black (000) to turn off a segment.
+  domain: script
+  input:
+    device_name:
+      name: Device Name
+      description: >
+        The friendly name of your Aqara T1M light as configured in Zigbee2MQTT.
+        This is the name that appears in the Zigbee2MQTT web interface, NOT the Home Assistant entity name.
+      default: "Living Room Ceiling Light"
+      selector:
+        text:
+    
+    global_brightness:
+      name: Global Brightness
+      description: Brightness level for all segments (0-255). Leave at 255 for full brightness.
+      default: 255
+      selector:
+        number:
+          min: 0
+          max: 255
+          step: 1
+          mode: slider
+    
+    # Color pickers for each segment (1-26)
+    color_01:
+      name: Segment 1 Color
+      description: Color for segment 1
+      default: [255, 0, 0]
+      selector:
+        color_rgb:
+    
+    color_02:
+      name: Segment 2 Color
+      description: Color for segment 2
+      default: [255, 0, 0]
+      selector:
+        color_rgb:
+    
+    color_03:
+      name: Segment 3 Color
+      description: Color for segment 3
+      default: [255, 0, 0]
+      selector:
+        color_rgb:
+    
+    color_04:
+      name: Segment 4 Color
+      description: Color for segment 4
+      default: [255, 0, 0]
+      selector:
+        color_rgb:
+    
+    color_05:
+      name: Segment 5 Color
+      description: Color for segment 5
+      default: [255, 0, 0]
+      selector:
+        color_rgb:
+    
+    color_06:
+      name: Segment 6 Color
+      description: Color for segment 6
+      default: [255, 0, 0]
+      selector:
+        color_rgb:
+    
+    color_07:
+      name: Segment 7 Color
+      description: Color for segment 7
+      default: [255, 127, 0]
+      selector:
+        color_rgb:
+    
+    color_08:
+      name: Segment 8 Color
+      description: Color for segment 8
+      default: [255, 127, 0]
+      selector:
+        color_rgb:
+    
+    color_09:
+      name: Segment 9 Color
+      description: Color for segment 9
+      default: [255, 127, 0]
+      selector:
+        color_rgb:
+    
+    color_10:
+      name: Segment 10 Color
+      description: Color for segment 10
+      default: [255, 127, 0]
+      selector:
+        color_rgb:
+    
+    color_11:
+      name: Segment 11 Color
+      description: Color for segment 11
+      default: [255, 255, 0]
+      selector:
+        color_rgb:
+    
+    color_12:
+      name: Segment 12 Color
+      description: Color for segment 12
+      default: [255, 255, 0]
+      selector:
+        color_rgb:
+    
+    color_13:
+      name: Segment 13 Color
+      description: Color for segment 13
+      default: [255, 255, 0]
+      selector:
+        color_rgb:
+    
+    color_14:
+      name: Segment 14 Color
+      description: Color for segment 14
+      default: [0, 255, 0]
+      selector:
+        color_rgb:
+    
+    color_15:
+      name: Segment 15 Color
+      description: Color for segment 15
+      default: [0, 255, 0]
+      selector:
+        color_rgb:
+    
+    color_16:
+      name: Segment 16 Color
+      description: Color for segment 16
+      default: [0, 255, 0]
+      selector:
+        color_rgb:
+    
+    color_17:
+      name: Segment 17 Color
+      description: Color for segment 17
+      default: [0, 255, 0]
+      selector:
+        color_rgb:
+    
+    color_18:
+      name: Segment 18 Color
+      description: Color for segment 18
+      default: [0, 255, 255]
+      selector:
+        color_rgb:
+    
+    color_19:
+      name: Segment 19 Color
+      description: Color for segment 19
+      default: [0, 255, 255]
+      selector:
+        color_rgb:
+    
+    color_20:
+      name: Segment 20 Color
+      description: Color for segment 20
+      default: [0, 255, 255]
+      selector:
+        color_rgb:
+    
+    color_21:
+      name: Segment 21 Color
+      description: Color for segment 21
+      default: [0, 0, 255]
+      selector:
+        color_rgb:
+    
+    color_22:
+      name: Segment 22 Color
+      description: Color for segment 22
+      default: [0, 0, 255]
+      selector:
+        color_rgb:
+    
+    color_23:
+      name: Segment 23 Color
+      description: Color for segment 23
+      default: [0, 0, 255]
+      selector:
+        color_rgb:
+    
+    color_24:
+      name: Segment 24 Color
+      description: Color for segment 24
+      default: [0, 0, 255]
+      selector:
+        color_rgb:
+    
+    color_25:
+      name: Segment 25 Color
+      description: Color for segment 25
+      default: [127, 0, 255]
+      selector:
+        color_rgb:
+    
+    color_26:
+      name: Segment 26 Color
+      description: Color for segment 26
+      default: [127, 0, 255]
+      selector:
+        color_rgb:
+
+sequence:
+  - variables:
+      device_name: !input device_name
+      brightness: !input global_brightness
+      c01: !input color_01
+      c02: !input color_02
+      c03: !input color_03
+      c04: !input color_04
+      c05: !input color_05
+      c06: !input color_06
+      c07: !input color_07
+      c08: !input color_08
+      c09: !input color_09
+      c10: !input color_10
+      c11: !input color_11
+      c12: !input color_12
+      c13: !input color_13
+      c14: !input color_14
+      c15: !input color_15
+      c16: !input color_16
+      c17: !input color_17
+      c18: !input color_18
+      c19: !input color_19
+      c20: !input color_20
+      c21: !input color_21
+      c22: !input color_22
+      c23: !input color_23
+      c24: !input color_24
+      c25: !input color_25
+      c26: !input color_26
+  - service: mqtt.publish
+    data:
+      topic: "zigbee2mqtt/{{ device_name }}/set"
+      payload: >
+        {
+          "ring_segments": [
+            {"segment": 1, "color": "#{{ '%02x%02x%02x' | format(c01[0], c01[1], c01[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 2, "color": "#{{ '%02x%02x%02x' | format(c02[0], c02[1], c02[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 3, "color": "#{{ '%02x%02x%02x' | format(c03[0], c03[1], c03[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 4, "color": "#{{ '%02x%02x%02x' | format(c04[0], c04[1], c04[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 5, "color": "#{{ '%02x%02x%02x' | format(c05[0], c05[1], c05[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 6, "color": "#{{ '%02x%02x%02x' | format(c06[0], c06[1], c06[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 7, "color": "#{{ '%02x%02x%02x' | format(c07[0], c07[1], c07[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 8, "color": "#{{ '%02x%02x%02x' | format(c08[0], c08[1], c08[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 9, "color": "#{{ '%02x%02x%02x' | format(c09[0], c09[1], c09[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 10, "color": "#{{ '%02x%02x%02x' | format(c10[0], c10[1], c10[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 11, "color": "#{{ '%02x%02x%02x' | format(c11[0], c11[1], c11[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 12, "color": "#{{ '%02x%02x%02x' | format(c12[0], c12[1], c12[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 13, "color": "#{{ '%02x%02x%02x' | format(c13[0], c13[1], c13[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 14, "color": "#{{ '%02x%02x%02x' | format(c14[0], c14[1], c14[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 15, "color": "#{{ '%02x%02x%02x' | format(c15[0], c15[1], c15[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 16, "color": "#{{ '%02x%02x%02x' | format(c16[0], c16[1], c16[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 17, "color": "#{{ '%02x%02x%02x' | format(c17[0], c17[1], c17[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 18, "color": "#{{ '%02x%02x%02x' | format(c18[0], c18[1], c18[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 19, "color": "#{{ '%02x%02x%02x' | format(c19[0], c19[1], c19[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 20, "color": "#{{ '%02x%02x%02x' | format(c20[0], c20[1], c20[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 21, "color": "#{{ '%02x%02x%02x' | format(c21[0], c21[1], c21[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 22, "color": "#{{ '%02x%02x%02x' | format(c22[0], c22[1], c22[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 23, "color": "#{{ '%02x%02x%02x' | format(c23[0], c23[1], c23[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 24, "color": "#{{ '%02x%02x%02x' | format(c24[0], c24[1], c24[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 25, "color": "#{{ '%02x%02x%02x' | format(c25[0], c25[1], c25[2]) }}", "brightness": {{ brightness }}},
+            {"segment": 26, "color": "#{{ '%02x%02x%02x' | format(c26[0], c26[1], c26[2]) }}", "brightness": {{ brightness }}}
+          ]
+        }
+
+mode: single
