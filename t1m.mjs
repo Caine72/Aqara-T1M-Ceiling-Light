@@ -129,10 +129,18 @@ function buildRingPacket(segments, hexColor, brightness = 255) {
 }
 
 const definition = {
-    zigbeeModel: ["lumi.light.acn032"],
+    zigbeeModel: ["lumi.light.acn032", "lumi.light.acn031"],
     model: "CL-L02D",
     vendor: "Aqara",
     description: "Ceiling light T1M",
+    whiteLabel: [
+        {
+            model: "HCXDD12LM",
+            vendor: "Aqara",
+            description: "Ceiling light T1",
+            fingerprint: [{modelID: "lumi.light.acn031"}],
+        },
+    ],
 
     configure: async (device, coordinatorEndpoint) => {
         const endpoint = device.getEndpoint(1);
