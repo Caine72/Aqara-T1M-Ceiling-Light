@@ -334,7 +334,8 @@ const definition = {
                     }
                 }
 
-                return {state: {ring_segments: value}};
+                // Update state - ring light state turns on when segments are activated
+                return {state: {ring_segments: value, state_rgb: "ON"}};
             },
         },
         {
