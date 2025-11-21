@@ -240,9 +240,9 @@ const definition = {
                     .withFeature(exposes.numeric("segment", ea.SET).withValueMin(1).withValueMax(26).withDescription("Segment number (1-26)"))
                     .withFeature(exposes.text("color", ea.SET).withDescription("Hex color (e.g., #FF0000)")),
             )
-            .withDescription("Set individual ring segment colors. Segments with the same color are automatically grouped."),
+            .withDescription("Set individual ring segment colors. #000000 turns off the segment."),
 
-        // Static ring segment brightness control
+        // Ring segment brightness control (applies to all segments)
         exposes
             .numeric("ring_segments_brightness", ea.SET)
             .withValueMin(0)
@@ -296,8 +296,9 @@ const definition = {
                 // Brightness from state or use default
                 const brightness = meta.state.ring_segments_brightness !== undefined ? meta.state.ring_segments_brightness : 255;
 
-                // Group segments by colour
+                // Group segments by colour only
                 const colorGroups = {};
+                const specifiedSegments = new Set();
 
                 for (const item of value) {
                     if (!item.segment || !item.color) {
@@ -318,6 +319,22 @@ const definition = {
                         };
                     }
                     colorGroups[color].segments.push(segment);
+                    specifiedSegments.add(segment);
+                }
+
+                // Turn off unspecified segments by setting to black (#000000)
+                const unspecifiedSegments = [];
+                for (let seg = 1; seg <= 26; seg++) {
+                    if (!specifiedSegments.has(seg)) {
+                        unspecifiedSegments.push(seg);
+                    }
+                }
+
+                if (unspecifiedSegments.length > 0) {
+                    colorGroups["#000000"] = {
+                        color: "#000000",
+                        segments: unspecifiedSegments,
+                    };
                 }
 
                 // Send one packet per colour group
@@ -398,7 +415,7 @@ const definition = {
                     {manufacturerCode, disableDefaultResponse: false},
                 );
 
-                 return {
+                return {
                     state: {
                         rgb_effect: effect,
                         rgb_effect_colors: colors,
