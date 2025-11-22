@@ -358,18 +358,19 @@ const definition = {
         {
             key: ["rgb_effect", "rgb_effect_colors", "rgb_effect_brightness", "rgb_effect_speed"],
             convertSet: async (entity, key, value, meta) => {
-                // Read current state with defaults
-                const effect = key === "rgb_effect" ? value : meta.state.rgb_effect || "flow1";
-                const colors = key === "rgb_effect_colors" ? value : meta.state.rgb_effect_colors || "#FF0000,#00FF00,#0000FF";
-                const brightnessPercent = key === "rgb_effect_brightness" ? value : meta.state.rgb_effect_brightness || 100;
-                const speed = key === "rgb_effect_speed" ? value : meta.state.rgb_effect_speed || 50;
+                // Read from incoming message first (allows single MQTT payload with all params),
+                // then fall back to state, then to defaults
+                const effect = meta.message.rgb_effect || meta.state.rgb_effect || "flow1";
+                const colors = meta.message.rgb_effect_colors || meta.state.rgb_effect_colors || "#FF0000,#00FF00,#0000FF";
+                const brightnessPercent = meta.message.rgb_effect_brightness ?? meta.state.rgb_effect_brightness ?? 100;
+                const speed = meta.message.rgb_effect_speed ?? meta.state.rgb_effect_speed ?? 50;
 
                 const effectId = T1M_RGB_EFFECTS[effect];
                 if (effectId === undefined) {
                     throw new Error(`Unknown effect: ${effect}. Supported: ${Object.keys(T1M_RGB_EFFECTS).join(", ")}`);
                 }
 
-                // Parse colours
+                // Parse colors
                 const colorList = colors.split(",").map((c) => c.trim());
 
                 if (colorList.length < 1 || colorList.length > 8) {
@@ -392,7 +393,7 @@ const definition = {
                 // Build the three messages using shared function
                 const {msg1, msg2, msg3} = buildRGBEffectMessages(colorList, brightness8bit, effectId, speed);
 
-                // Send Message 1: Colours
+                // Send Message 1: Colors
                 await new Promise((resolve) => setTimeout(resolve, 200));
                 await entity.write(
                     "manuSpecificLumi",
@@ -415,6 +416,7 @@ const definition = {
                     {manufacturerCode, disableDefaultResponse: false},
                 );
 
+                // Update state - ring light turns on when effects are activated
                 return {
                     state: {
                         rgb_effect: effect,
