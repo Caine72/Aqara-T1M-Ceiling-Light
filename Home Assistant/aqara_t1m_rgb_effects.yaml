@@ -45,7 +45,16 @@
 ##  topic: zigbee2mqtt/YOUR_LIGHT_NAME/set
 ##  payload: '{"rgb_effect":"breathing","rgb_effect_colors":"#ffaa00,#00aaff","rgb_effect_brightness":100,"rgb_effect_speed":30}'
 ##
-## rgb_effect_colors : Color Limits
+## rgb_effect
+## flow1      // Smooth flowing transition
+## flow2      // Alternate flowing pattern  
+## fading     // Fade in/out
+## hopping    // Jump between colors
+## breathing  // Pulse effect
+## rolling    // Rotate around ring
+## off        // Stop effects
+##
+## rgb_effect_colors
 ## - Comma seperated list of RGB hex values, up to 8 colors
 ## - Minimum: 1 color
 ## - Maximum: 8 colors
