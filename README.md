@@ -28,7 +28,7 @@ Blueprint to control the RGB ring light segments.
      - This is the name shown in the Zigbee2MQTT web interface, NOT the Home Assistant entity name
      - You can find this in Zigbee2MQTT → Devices → your light
    - **Global Brightness**: Set the brightness level (default: 255 = full brightness)
-   - **Color Pickers**: Configure each of the 26 segment colors
+   - **Color Pickers**: Configure each of the 26 segment colors. #000000 (black) turns off a segment. 
 
 ### 3. Running the Script
 Once created, you can run the script in several ways:
