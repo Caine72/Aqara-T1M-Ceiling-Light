@@ -65,7 +65,7 @@ Once created, you can run the script in several ways:
 3. **Automation**: Trigger it from an automation
 
 ## aqara_t1m_rgb_effects.yaml 
-Home Assistant buttons card for activing RGB dynamic effects and creating custom effects. Uses recreation of the Aqara app preset effect patterns as examples.
+Home Assistant buttons card for activing RGB dynamic effects and creating custom effects. Uses recreation of the Aqara Home app preset effect patterns as examples: Dinner, Sunset, Autumn, Galaxy, Daydream, Holiday, Party, Meteor, Alert. 
 
 ### 1. Usage
 1. Edit your Home Assistant dashboard
