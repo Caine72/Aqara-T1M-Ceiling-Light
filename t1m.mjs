@@ -242,12 +242,14 @@ const definition = {
             )
             .withDescription("Set individual ring segment colors. #000000 turns off the segment."),
 
-        // Ring segment brightness control (applies to all segments)
+       // Ring segment brightness control - percentage based (applies to all segments)
         exposes
             .numeric("ring_segments_brightness", ea.SET)
-            .withValueMin(0)
-            .withValueMax(255)
-            .withDescription("Brightness for ring segments (0-255, applies to all segments)")
+            .withValueMin(1)
+            .withValueMax(100)
+            .withValueStep(1)
+            .withUnit("%")
+            .withDescription("Brightness for ring segments (1-100%)")
             .withCategory("config"),
 
         // Dynamic ring RGB effects
@@ -280,10 +282,10 @@ const definition = {
         {
             key: ["ring_segments", "ring_segments_brightness"],
             convertSet: async (entity, key, value, meta) => {
-                // Brightness
+                // Handle brightness setting
                 if (key === "ring_segments_brightness") {
-                    if (value < 0 || value > 255) {
-                        throw new Error(`Invalid brightness: ${value}. Must be 0-255`);
+                    if (value < 1 || value > 100) {
+                        throw new Error(`Invalid brightness: ${value}. Must be 1-100%`);
                     }
                     return {state: {ring_segments_brightness: value}};
                 }
@@ -293,8 +295,11 @@ const definition = {
                     throw new Error("ring_segments must be a non-empty array");
                 }
 
-                // Brightness from state or use default
-                const brightness = meta.state.ring_segments_brightness !== undefined ? meta.state.ring_segments_brightness : 255;
+                // Brightness from state or use default (100%)
+                const brightnessPercent = meta.state.ring_segments_brightness !== undefined ? meta.state.ring_segments_brightness : 100;
+
+                // Convert percentage (1-100) to hardware value (0-255)
+                const brightness = Math.round((brightnessPercent / 100) * 255);
 
                 // Group segments by colour only
                 const colorGroups = {};
@@ -337,7 +342,7 @@ const definition = {
                     };
                 }
 
-                // Send one packet per colour group
+                // Send one packet per color group
                 const groups = Object.values(colorGroups);
                 for (let i = 0; i < groups.length; i++) {
                     const group = groups[i];
