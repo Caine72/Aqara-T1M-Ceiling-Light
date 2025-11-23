@@ -28,7 +28,6 @@ blueprint:
             - "hopping"
             - "breathing"
             - "rolling"
-            - "off"
 
     number_of_colors:
       name: Number of colors
