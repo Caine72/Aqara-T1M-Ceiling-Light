@@ -1,0 +1,100 @@
+## Example card for ring segment buttons with scripts
+##
+## Uses hass-custom_icons - https://github.com/thomasloven/hass-custom_icons
+## Place icons in folder /config/custom_icons/t1m_icons 
+##
+## For brightness slider create an Input Helper via Home Assistant UI
+## 1. Settings → Devices & Services → Helpers
+## 2. Create Number helper:
+##   - Name: `t1m_preset_brightness`
+##   - Min: 1
+##   - Max: 100
+##   - Step: 1
+
+type: vertical-stack
+cards:
+  - type: markdown
+    content: |
+      ## T1M Ring Presets
+      
+  # Brightness Control Slider
+  - type: entities
+    entities:
+      - entity: input_number.t1m_preset_brightness
+        name: Preset Brightness
+        
+  - type: grid
+    columns: 4
+    square: false
+    cards:
+      - type: button
+        icon: local:t1m_icons/preset_01
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_1
+
+      - type: button
+        icon: local:t1m_icons/preset_02
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_2
+
+      - type: button
+        icon: local:t1m_icons/preset_03
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_3
+
+      - type: button
+        icon: local:t1m_icons/preset_04
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_4
+
+      - type: button
+        icon: local:t1m_icons/preset_05
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_5
+
+      - type: button
+        icon: local:t1m_icons/preset_06
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_6
+
+      - type: button
+        icon: local:t1m_icons/preset_07
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_7
+
+      - type: button
+        icon: local:t1m_icons/preset_08
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_8
+
+      - type: button
+        icon: local:t1m_icons/preset_09
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_9
+
+      - type: button
+        icon: local:t1m_icons/preset_10
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_10
+
+      - type: button
+        icon: local:t1m_icons/preset_11
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_11
+
+      - type: button
+        icon: local:t1m_icons/preset_12
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_12

@@ -1,0 +1,97 @@
+## Example card for ring segment buttons with scripts
+##
+## For brightness slider create an Input Helper via Home Assistant UI
+## 1. Settings → Devices & Services → Helpers
+## 2. Create Number helper:
+##   - Name: `t1m_preset_brightness`
+##   - Min: 1
+##   - Max: 100
+##   - Step: 1
+
+type: vertical-stack
+cards:
+  - type: markdown
+    content: |
+      ## Aqara T1M Ring Presets
+      
+  # Brightness Control Slider
+  - type: entities
+    entities:
+      - entity: input_number.t1m_preset_brightness
+        name: Preset Brightness
+        
+  - type: grid
+    columns: 4
+    square: false
+    cards:
+      - type: button
+        name: "1"
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_1
+
+      - type: button
+        name: "2"
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_2
+
+      - type: button
+        name: "3"
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_3
+
+      - type: button
+        name: "4"
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_4
+
+      - type: button
+        name: "5"
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_5
+
+      - type: button
+        name: "6"
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_6
+
+      - type: button
+        name: "7"
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_7
+
+      - type: button
+        name: "8"
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_8
+
+      - type: button
+        name: "9"
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_9
+
+      - type: button
+        name: "10"
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_10
+
+      - type: button
+        name: "11"
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_11
+
+      - type: button
+        name: "12"
+        tap_action:
+          action: call-service
+          service: script.t1m_preset_12

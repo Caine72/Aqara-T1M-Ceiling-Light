@@ -1,0 +1,425 @@
+## Aqara T1M Ceiling Preset Ring Light Segment Scripts for Blueprint
+## Add these to your scripts.yaml file
+## These call the blueprint with 12 examples based on the presets in the Aqara Home app
+##
+## NOTE: First install the blueprint to /config/blueprints/script/aqara_t1m_ring_segments.yaml
+##
+## For brightness slider create an Input Helper via Home Assistant UI
+## 1. Settings → Devices & Services → Helpers
+## 2. Create Number helper:
+##   - Name: `t1m_preset_brightness`
+##   - Min: 1
+##   - Max: 100
+##   - Step: 1
+##
+## Replace YOUR_LIGHT_NAME with your light firendly name from Zigbee2MQTT
+## Then add these scripts to your scripts.yaml
+
+t1m_preset_1:
+  alias: T1M Preset 1
+  use_blueprint:
+    path: aqara_t1m/aqara_t1m_ring_segments.yaml
+    input:
+      device_name: YOUR_LIGHT_NAME
+      global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
+      color_01: [255, 205, 213]
+      color_02: [255, 205, 213]
+      color_03: [255, 205, 213]
+      color_04: [255, 205, 213]
+      color_05: [255, 205, 213]
+      color_06: [255, 205, 213]
+      color_07: [255, 205, 213]
+      color_08: [255, 176, 190]
+      color_09: [255, 176, 190]
+      color_10: [255, 176, 190]
+      color_11: [255, 176, 190]
+      color_12: [255, 176, 190]
+      color_13: [255, 176, 190]
+      color_14: [255, 88, 136]
+      color_15: [255, 88, 136]
+      color_16: [255, 88, 136]
+      color_17: [255, 88, 136]
+      color_18: [255, 88, 136]
+      color_19: [255, 88, 136]
+      color_20: [255, 88, 136]
+      color_21: [227, 57, 72]
+      color_22: [227, 57, 72]
+      color_23: [227, 57, 72]
+      color_24: [227, 57, 72]
+      color_25: [227, 57, 72]
+      color_26: [227, 57, 72]
+
+t1m_preset_2:
+  alias: T1M Preset 2
+  use_blueprint:
+    path: aqara_t1m/aqara_t1m_ring_segments.yaml
+    input:
+      device_name: YOUR_LIGHT_NAME
+      global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
+      color_01: [255, 235, 193]
+      color_02: [255, 235, 193]
+      color_03: [255, 235, 193]
+      color_04: [255, 235, 193]
+      color_05: [255, 235, 193]
+      color_06: [255, 235, 193]
+      color_07: [255, 235, 193]
+      color_08: [255, 200, 111]
+      color_09: [255, 200, 111]
+      color_10: [255, 200, 111]
+      color_11: [255, 200, 111]
+      color_12: [255, 200, 111]
+      color_13: [255, 200, 111]
+      color_14: [255, 153, 29]
+      color_15: [255, 153, 29]
+      color_16: [255, 153, 29]
+      color_17: [255, 153, 29]
+      color_18: [255, 153, 29]
+      color_19: [255, 153, 29]
+      color_20: [255, 153, 29]
+      color_21: [251, 125, 28]
+      color_22: [251, 125, 28]
+      color_23: [251, 125, 28]
+      color_24: [251, 125, 28]
+      color_25: [251, 125, 28]
+      color_26: [251, 125, 28]
+
+t1m_preset_3:
+  alias: T1M Preset 3
+  use_blueprint:
+    path: aqara_t1m/aqara_t1m_ring_segments.yaml
+    input:
+      device_name: YOUR_LIGHT_NAME
+      global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
+      color_01: [129, 235, 254]
+      color_02: [129, 235, 254]
+      color_03: [129, 235, 254]
+      color_04: [129, 235, 254]
+      color_05: [129, 235, 254]
+      color_06: [129, 235, 254]
+      color_07: [129, 235, 254]
+      color_08: [108, 198, 251]
+      color_09: [108, 198, 251]
+      color_10: [108, 198, 251]
+      color_11: [108, 198, 251]
+      color_12: [108, 198, 251]
+      color_13: [108, 198, 251]
+      color_14: [26, 152, 249]
+      color_15: [26, 152, 249]
+      color_16: [26, 152, 249]
+      color_17: [26, 152, 249]
+      color_18: [26, 152, 249]
+      color_19: [26, 152, 249]
+      color_20: [26, 152, 249]
+      color_21: [40, 137, 243]
+      color_22: [40, 137, 243]
+      color_23: [40, 137, 243]
+      color_24: [40, 137, 243]
+      color_25: [40, 137, 243]
+      color_26: [40, 137, 243]
+
+t1m_preset_4:
+  alias: T1M Preset 4
+  use_blueprint:
+    path: aqara_t1m/aqara_t1m_ring_segments.yaml
+    input:
+      device_name: YOUR_LIGHT_NAME
+      global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
+      color_01: [233, 202, 249]
+      color_02: [233, 202, 249]
+      color_03: [233, 202, 249]
+      color_04: [233, 202, 249]
+      color_05: [233, 202, 249]
+      color_06: [233, 202, 249]
+      color_07: [233, 202, 249]
+      color_08: [199, 142, 237]
+      color_09: [199, 142, 237]
+      color_10: [199, 142, 237]
+      color_11: [199, 142, 237]
+      color_12: [199, 142, 237]
+      color_13: [199, 142, 237]
+      color_14: [162, 88, 255]
+      color_15: [162, 88, 255]
+      color_16: [162, 88, 255]
+      color_17: [162, 88, 255]
+      color_18: [162, 88, 255]
+      color_19: [162, 88, 255]
+      color_20: [162, 88, 255]
+      color_21: [149, 70, 226]
+      color_22: [149, 70, 226]
+      color_23: [149, 70, 226]
+      color_24: [149, 70, 226]
+      color_25: [149, 70, 226]
+      color_26: [149, 70, 226]
+
+t1m_preset_5:
+  alias: T1M Preset 5
+  use_blueprint:
+    path: aqara_t1m/aqara_t1m_ring_segments.yaml
+    input:
+      device_name: YOUR_LIGHT_NAME
+      global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
+      color_01: [255, 83, 74]
+      color_02: [255, 83, 74]
+      color_03: [255, 83, 74]
+      color_04: [255, 83, 74]
+      color_05: [255, 83, 74]
+      color_06: [255, 83, 74]
+      color_07: [255, 83, 74]
+      color_08: [255, 236, 112]
+      color_09: [255, 236, 112]
+      color_10: [255, 236, 112]
+      color_11: [255, 236, 112]
+      color_12: [255, 236, 112]
+      color_13: [255, 236, 112]
+      color_14: [127, 222, 150]
+      color_15: [127, 222, 150]
+      color_16: [127, 222, 150]
+      color_17: [127, 222, 150]
+      color_18: [127, 222, 150]
+      color_19: [127, 222, 150]
+      color_20: [127, 222, 150]
+      color_21: [255, 135, 29]
+      color_22: [255, 135, 29]
+      color_23: [255, 135, 29]
+      color_24: [255, 135, 29]
+      color_25: [255, 135, 29]
+      color_26: [255, 135, 29]
+
+
+t1m_preset_6:
+  alias: T1M Preset 6
+  use_blueprint:
+    path: aqara_t1m/aqara_t1m_ring_segments.yaml
+    input:
+      device_name: YOUR_LIGHT_NAME
+      global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
+      color_01: [26, 152, 249]
+      color_02: [26, 152, 249]
+      color_03: [26, 152, 249]
+      color_04: [26, 152, 249]
+      color_05: [26, 152, 249]
+      color_06: [26, 152, 249]
+      color_07: [255, 88, 136]
+      color_08: [255, 88, 136]
+      color_09: [255, 88, 136]
+      color_10: [255, 88, 136]
+      color_11: [255, 88, 136]
+      color_12: [255, 88, 136]
+      color_13: [255, 88, 136]
+      color_14: [255, 210, 30]
+      color_15: [255, 210, 30]
+      color_16: [255, 210, 30]
+      color_17: [255, 210, 30]
+      color_18: [255, 210, 30]
+      color_19: [255, 210, 30]
+      color_20: [180, 114, 232]
+      color_21: [180, 114, 232]
+      color_22: [180, 114, 232]
+      color_23: [180, 114, 232]
+      color_24: [180, 114, 232]
+      color_25: [180, 114, 232]
+      color_26: [180, 114, 232]
+
+t1m_preset_7:
+  alias: T1M Preset 7
+  use_blueprint:
+    path: aqara_t1m/aqara_t1m_ring_segments.yaml
+    input:
+      device_name: YOUR_LIGHT_NAME
+      global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
+      color_01: [167, 188, 255]
+      color_02: [167, 188, 255]
+      color_03: [167, 188, 255]
+      color_04: [167, 188, 255]
+      color_05: [167, 188, 255]
+      color_06: [167, 188, 255]
+      color_07: [198, 234, 94]
+      color_08: [198, 234, 94]
+      color_09: [198, 234, 94]
+      color_10: [198, 234, 94]
+      color_11: [198, 234, 94]
+      color_12: [255, 194, 95]
+      color_13: [255, 194, 95]
+      color_14: [255, 194, 95]
+      color_15: [255, 194, 95]
+      color_16: [255, 194, 95]
+      color_17: [255, 134, 125]
+      color_18: [255, 134, 125]
+      color_19: [255, 134, 125]
+      color_20: [255, 134, 125]
+      color_21: [255, 134, 125]
+      color_22: [70, 96, 255]
+      color_23: [70, 96, 255]
+      color_24: [70, 96, 255]
+      color_25: [70, 96, 255]
+      color_26: [70, 96, 255]
+
+t1m_preset_8:
+  alias: T1M Preset 8
+  use_blueprint:
+    path: aqara_t1m/aqara_t1m_ring_segments.yaml
+    input:
+      device_name: YOUR_LIGHT_NAME
+      global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
+      color_01: [255, 221, 50]
+      color_02: [255, 221, 50]
+      color_03: [255, 221, 50]
+      color_04: [255, 221, 50]
+      color_05: [255, 221, 50]
+      color_06: [138, 214, 252]
+      color_07: [138, 214, 252]
+      color_08: [138, 214, 252]
+      color_09: [138, 214, 252]
+      color_10: [138, 214, 252]
+      color_11: [0, 140, 248]
+      color_12: [0, 140, 248]
+      color_13: [0, 140, 248]
+      color_14: [0, 140, 248]
+      color_15: [0, 140, 248]
+      color_16: [146, 104, 232]
+      color_17: [146, 104, 232]
+      color_18: [146, 104, 232]
+      color_19: [146, 104, 232]
+      color_20: [146, 104, 232]
+      color_21: [213, 162, 242]
+      color_22: [213, 162, 242]
+      color_23: [213, 162, 242]
+      color_24: [213, 162, 242]
+      color_25: [213, 162, 242]
+      color_26: [213, 162, 242]
+
+t1m_preset_9:
+  alias: T1M Preset 9
+  use_blueprint:
+    path: aqara_t1m/aqara_t1m_ring_segments.yaml
+    input:
+      device_name: YOUR_LIGHT_NAME
+      global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
+      color_01: [255, 134, 160]
+      color_02: [255, 134, 160]
+      color_03: [255, 134, 160]
+      color_04: [255, 134, 160]
+      color_05: [255, 134, 160]
+      color_06: [198, 234, 94]
+      color_07: [198, 234, 94]
+      color_08: [198, 234, 94]
+      color_09: [198, 234, 94]
+      color_10: [198, 234, 94]
+      color_11: [91, 192, 251]
+      color_12: [91, 192, 251]
+      color_13: [91, 192, 251]
+      color_14: [91, 192, 251]
+      color_15: [91, 192, 251]
+      color_16: [255, 194, 95]
+      color_17: [255, 194, 95]
+      color_18: [255, 194, 95]
+      color_19: [255, 194, 95]
+      color_20: [255, 194, 95]
+      color_21: [193, 192, 235]
+      color_22: [193, 192, 235]
+      color_23: [193, 192, 235]
+      color_24: [193, 192, 235]
+      color_25: [193, 192, 235]
+      color_26: [193, 192, 235]
+
+t1m_preset_10:
+  alias: T1M Preset 10
+  use_blueprint:
+    path: aqara_t1m/aqara_t1m_ring_segments.yaml
+    input:
+      device_name: YOUR_LIGHT_NAME
+      global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
+      color_01: [193, 129, 235]
+      color_02: [193, 129, 235]
+      color_03: [193, 129, 235]
+      color_04: [193, 129, 235]
+      color_05: [193, 129, 235]
+      color_06: [151, 69, 222]
+      color_07: [151, 69, 222]
+      color_08: [151, 69, 222]
+      color_09: [151, 69, 222]
+      color_10: [151, 69, 222]
+      color_11: [255, 69, 122]
+      color_12: [255, 69, 122]
+      color_13: [255, 69, 122]
+      color_14: [255, 69, 122]
+      color_15: [255, 69, 122]
+      color_16: [255, 169, 49]
+      color_17: [255, 169, 49]
+      color_18: [255, 169, 49]
+      color_19: [255, 169, 49]
+      color_20: [255, 169, 49]
+      color_21: [255, 215, 140]
+      color_22: [255, 215, 140]
+      color_23: [255, 215, 140]
+      color_24: [255, 215, 140]
+      color_25: [255, 215, 140]
+      color_26: [255, 215, 140]
+
+t1m_preset_11:
+  alias: T1M Preset 11
+  use_blueprint:
+    path: aqara_t1m/aqara_t1m_ring_segments.yaml
+    input:
+      device_name: YOUR_LIGHT_NAME
+      global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
+      color_01: [45, 168, 249]
+      color_02: [45, 168, 249]
+      color_03: [45, 168, 249]
+      color_04: [45, 168, 249]
+      color_05: [0, 140, 248]
+      color_06: [0, 140, 248]
+      color_07: [0, 140, 248]
+      color_08: [0, 140, 248]
+      color_09: [255, 244, 141]
+      color_10: [255, 244, 141]
+      color_11: [255, 244, 141]
+      color_12: [255, 244, 141]
+      color_13: [255, 244, 141]
+      color_14: [255, 205, 5]
+      color_15: [255, 205, 5]
+      color_16: [255, 205, 5]
+      color_17: [255, 205, 5]
+      color_18: [255, 141, 3]
+      color_19: [255, 141, 3]
+      color_20: [255, 141, 3]
+      color_21: [255, 141, 3]
+      color_22: [185, 233, 254]
+      color_23: [185, 233, 254]
+      color_24: [185, 233, 254]
+      color_25: [185, 233, 254]
+      color_26: [185, 233, 254]
+
+t1m_preset_12:
+  alias: T1M Preset 12
+  use_blueprint:
+    path: aqara_t1m/aqara_t1m_ring_segments.yaml
+    input:
+      device_name: YOUR_LIGHT_NAME
+      global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
+      color_01: [255, 170, 161]
+      color_02: [255, 170, 161]
+      color_03: [255, 170, 161]
+      color_04: [255, 170, 161]
+      color_05: [255, 134, 160]
+      color_06: [255, 134, 160]
+      color_07: [255, 134, 160]
+      color_08: [255, 134, 160]
+      color_09: [255, 103, 90]
+      color_10: [255, 103, 90]
+      color_11: [255, 103, 90]
+      color_12: [255, 103, 90]
+      color_13: [255, 103, 90]
+      color_14: [255, 69, 122]
+      color_15: [255, 69, 122]
+      color_16: [255, 69, 122]
+      color_17: [255, 69, 122]
+      color_18: [224, 34, 51]
+      color_19: [224, 34, 51]
+      color_20: [224, 34, 51]
+      color_21: [224, 34, 51]
+      color_22: [255, 199, 208]
+      color_23: [255, 199, 208]
+      color_24: [255, 199, 208]
+      color_25: [255, 199, 208]
+      color_26: [255, 199, 208]
