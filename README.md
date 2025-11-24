@@ -56,7 +56,7 @@ Home Assistant script blueprint to control the RGB ring light segments.
    - **Device Name**: Enter your T1M light's friendly name from Zigbee2MQTT (e.g., "Living Room Light")
      - This is the name shown in the Zigbee2MQTT web interface, NOT the Home Assistant entity name
      - You can find this in Zigbee2MQTT → Devices → your light
-   - **Global Brightness**: Set the brightness level (default: 255 = full brightness)
+   - **Global Brightness**: 1% - 100%
    - **Color Pickers**: Configure each of the 26 segment colors. #000000 (black) turns off a segment.
 5. Save the script
 
