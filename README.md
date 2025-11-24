@@ -134,7 +134,7 @@ Home Assistant script blueprint for custom RGB ring light dynamic effects.
    - **Effect Speed**: Percentage between 1 and 100
 5. Save the script
 
-#### 3. Running a created script Script
+#### 3. Running a created script
 Once created, you can run a script in several ways:
 
 1. **Manually**: Go to **Settings** → **Automations & Scenes** → **Scripts** and run it
