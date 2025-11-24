@@ -1,0 +1,113 @@
+## Aqara T1M RGB Ring Dynamic Effects
+## Home Assistant card example
+##
+## These buttons activate replications of the preset RGB dynamic effect scenes from the Aqara Home app
+##
+## Installation
+## 1. Install the blueprint aqara_t1m_ring_effects_blueprint.yaml
+## 2. Replace YOUR_LIGHT_NAME with your light friendly name from Zigbee2MQTT
+## 3. Add the effect scripts from aqara_t1m_ring_effects_script_examples.yaml to your scripts.yaml
+## 4. Edit your Home Assistant dashboard
+## 5. Click **Add Card** >> **Manual**
+## 6. Copy the YAML from below
+
+type: vertical-stack
+cards:
+  - type: markdown
+    content: |
+      ## T1M RGB Ring Dynamic Effects
+      
+  - type: grid
+    columns: 3
+    square: false
+    cards:
+      - type: button
+        name: Dinner
+        icon: mdi:silverware-fork-knife
+        tap_action:
+          action: call-service
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_dinner
+        
+      - type: button
+        name: Sunset
+        icon: mdi:weather-sunset
+        tap_action:
+          action: call-service
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_sunset
+        
+      - type: button
+        name: Autumn
+        icon: mdi:leaf-maple
+        tap_action:
+          action: call-service
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_autumn
+
+      - type: button
+        name: Galaxy
+        icon: mdi:creation
+        tap_action:
+          action: call-service
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_galaxy
+        
+      - type: button
+        name: Daydream
+        icon: mdi:weather-cloudy
+        tap_action:
+          action: call-service
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_daydream
+        
+      - type: button
+        name: Holiday
+        icon: mdi:party-popper
+        tap_action:
+          action: call-service
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_holiday
+
+      - type: button
+        name: Party
+        icon: mdi:balloon
+        tap_action:
+          action: call-service
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_party
+        
+      - type: button
+        name: Meteor
+        icon: mdi:meteor
+        tap_action:
+          action: call-service
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_meteor
+        
+      - type: button
+        name: Alert
+        icon: mdi:alert-circle
+        tap_action:
+          action: call-service
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_alert
+
+  - type: button
+    name: Stop Effects
+    icon: mdi:stop
+    tap_action:
+      action: call-service
+      service: mqtt.publish
+      data:
+        topic: zigbee2mqtt/YOUR_LIGHT_NAME/set
+        payload: '{"state_rgb":"OFF"}'

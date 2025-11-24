@@ -1,7 +1,12 @@
+## Aqara T1M RGB Ring Segments
+## Home Assistant script blueprint
+##
+## Install to blueprints/script/aqara_t1m/aqara_t1m_ring_segments_blueprint.yaml
+
 blueprint:
-  name: Aqara T1M Ceiling Light - RGB Ring Segment Colors
+  name: Aqara T1M - RGB Ring Segments Script
   description: >
-    Control each of the 26 individual ring segments on the Aqara T1M Ceiling Light ring with custom colors. 
+    Script blueprint to control each of the 26 individual ring segments on the Aqara T1M Ceiling Light ring with custom colors. 
     Each segment can be set to any color using a color picker, set the color to black (000) to turn off a segment.
   domain: script
   input:
