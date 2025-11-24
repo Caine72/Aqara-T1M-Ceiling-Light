@@ -60,7 +60,7 @@ Home Assistant script blueprint to control the RGB ring light segments.
    - **Color Pickers**: Configure each of the 26 segment colors. #000000 (black) turns off a segment.
 5. Save the script
 
-#### 3. Running a created script Script
+#### 3. Running a created script
 Once created, you can run a script in several ways:
 
 1. **Manually**: Go to **Settings** → **Automations & Scenes** → **Scripts** and run it
