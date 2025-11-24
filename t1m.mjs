@@ -6,39 +6,6 @@ import "zigbee-herdsman-converters/lib/types";
 const {lumiModernExtend, manufacturerCode} = lumi;
 const ea = exposes.access;
 
-// T1M RGB Dynamic Effect definitions
-const T1M_RGB_EFFECTS = {
-    flow1: 0,
-    flow2: 1,
-    fading: 2,
-    hopping: 3,
-    breathing: 4,
-    rolling: 5,
-};
-
-// Build RGB dynamic effect messages
-// Format is identical for T1M and T2
-function buildRGBEffectMessages(colorList, brightness8bit, effectId, speed) {
-    // Encode all colors
-    const colorBytes = [];
-    for (const color of colorList) {
-        const encoded = encodeColor(color);
-        colorBytes.push(...encoded);
-    }
-
-    // Message 1: Colors (0x03)
-    const msg1Length = 3 + colorList.length * 4;
-    const msg1 = Buffer.from([0x01, 0x01, 0x03, msg1Length, brightness8bit, 0x00, colorList.length, ...colorBytes]);
-
-    // Message 2: Effect Type (0x04)
-    const msg2 = Buffer.from([0x01, 0x01, 0x04, 0x0c, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, effectId]);
-
-    // Message 3: Speed (0x05)
-    const msg3 = Buffer.from([0x01, 0x01, 0x05, 0x01, speed]);
-
-    return {msg1, msg2, msg3};
-}
-
 // Convert RGB to XY
 function rgbToXY(r, g, b) {
     // Normalize RGB to 0-1
@@ -127,6 +94,16 @@ function buildRingPacket(segments, hexColor, brightness = 255) {
     // [17-18]: Footer (02:bc)
     return [0x01, 0x01, 0x01, 0x0f, brightnessByte, ...segmentMask, 0x00, 0x00, 0x00, 0x00, ...colorBytes, 0x02, 0xbc];
 }
+
+// T1M RGB Dynamic Effect definitions
+const T1M_RGB_EFFECTS = {
+    flow1: 0,
+    flow2: 1,
+    fading: 2,
+    hopping: 3,
+    breathing: 4,
+    rolling: 5,
+};
 
 const definition = {
     zigbeeModel: ["lumi.light.acn032", "lumi.light.acn031"],
@@ -242,7 +219,7 @@ const definition = {
             )
             .withDescription("Set individual ring segment colors. #000000 turns off the segment."),
 
-       // Ring segment brightness control - percentage based (applies to all segments)
+        // Ring segment brightness control - percentage based (applies to all segments)
         exposes
             .numeric("ring_segments_brightness", ea.SET)
             .withValueMin(1)
@@ -393,33 +370,37 @@ const definition = {
                 // Convert brightness percentage to 8-bit value (0-254)
                 const brightness8bit = Math.round((brightnessPercent / 100) * 254);
 
-                const ATTR_RGB_EFFECT = 0x0527;
+                // Encode all colors for the color message
+                const colorBytes = [];
+                for (const color of colorList) {
+                    const encoded = encodeColor(color);
+                    colorBytes.push(...encoded);
+                }
 
-                // Build the three messages using shared function
-                const {msg1, msg2, msg3} = buildRGBEffectMessages(colorList, brightness8bit, effectId, speed);
+                // Build color message (0x03 prefix) - still sent to 0x0527
+                const msg1Length = 3 + colorList.length * 4;
+                const msg1 = Buffer.from([0x01, 0x01, 0x03, msg1Length, brightness8bit, 0x00, colorList.length, ...colorBytes]);
 
-                // Send Message 1: Colors
-                await new Promise((resolve) => setTimeout(resolve, 200));
+                const ATTR_RGB_COLORS = 0x0527;
+                const ATTR_RGB_EFFECT_TYPE = 0x051f;
+                const ATTR_RGB_EFFECT_SPEED = 0x0520;
+
+                // Send colors to 0x0527
                 await entity.write(
                     "manuSpecificLumi",
-                    {[ATTR_RGB_EFFECT]: {value: msg1, type: 0x41}},
+                    {[ATTR_RGB_COLORS]: {value: msg1, type: 0x41}},
                     {manufacturerCode, disableDefaultResponse: false},
                 );
 
-                // Send Message 2: Effect Type
-                await entity.write(
-                    "manuSpecificLumi",
-                    {[ATTR_RGB_EFFECT]: {value: msg2, type: 0x41}},
-                    {manufacturerCode, disableDefaultResponse: false},
-                );
+                await new Promise((resolve) => setTimeout(resolve, 100));
 
-                // Send Message 3: Speed
-                await new Promise((resolve) => setTimeout(resolve, 200));
-                await entity.write(
-                    "manuSpecificLumi",
-                    {[ATTR_RGB_EFFECT]: {value: msg3, type: 0x41}},
-                    {manufacturerCode, disableDefaultResponse: false},
-                );
+                // Send effect type to 0x051f (32-bit uint)
+                await entity.write("manuSpecificLumi", {[ATTR_RGB_EFFECT_TYPE]: {value: effectId, type: 0x23}}, {manufacturerCode});
+
+                await new Promise((resolve) => setTimeout(resolve, 100));
+
+                // Send speed to 0x0520 (8-bit uint)
+                await entity.write("manuSpecificLumi", {[ATTR_RGB_EFFECT_SPEED]: {value: speed, type: 0x20}}, {manufacturerCode});
 
                 // Update state - ring light turns on when effects are activated
                 return {
