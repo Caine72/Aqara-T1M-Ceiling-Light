@@ -35,19 +35,22 @@ Alternatively place the file **t1m.mjs** in the folder **zigbee2mqtt/data/extern
 If an external converter is active for a device a cyan icon with "Supported: external" will be displayed under the device name in Zigbee2MQTT.
 
 ## Home Assistant
-## aqara_t1m_ring_segments.yaml
+The Home Assistant folder contains a collection of blueprint, scripts, cards and examples to control the RGB ring light with color segmentations and dynamic effects.
+
+## RGB Ring Segment Patterns
+### aqara_t1m_ring_segments_blueprint.yaml
 Home Assistant script blueprint to control the RGB ring light segments.
 
-### 1. Import the Blueprint
+#### 1. Import the Blueprint
 1. In Home Assistant, go to **Settings** → **Automations & Scenes** → **Blueprints**
 2. Click the **Import Blueprint** button
 3. Paste the URL to this blueprint file or upload it directly
 4. Click **Preview** and then **Import**
 
-### 2. Create a Script from the Blueprint
+#### 2. Create a Script from the Blueprint
 1. Go to **Settings** → **Automations & Scenes** → **Scripts**
 2. Click **Add Script** → **Create new script from blueprint**
-3. Select **Aqara T1M Ceiling Light - RGB Ring Segment Colors**
+3. Select **Aqara T1M - RGB Ring Segments Script**
 4. Configure the script:
    - **Name**: Give it a descriptive name (e.g., "T1M Custom Ring Pattern")
    - **Device Name**: Enter your T1M light's friendly name from Zigbee2MQTT (e.g., "Living Room Light")
@@ -57,83 +60,111 @@ Home Assistant script blueprint to control the RGB ring light segments.
    - **Color Pickers**: Configure each of the 26 segment colors. #000000 (black) turns off a segment.
 5. Save the script
 
-### 3. Running the Script
-Once created, you can run the script in several ways:
+#### 3. Running a created script Script
+Once created, you can run a script in several ways:
 
 1. **Manually**: Go to **Settings** → **Automations & Scenes** → **Scripts** and run it
 2. **Dashboard Button**: Add a script button to your dashboard
 3. **Automation**: Trigger it from an automation
 
-## aqara_t1m_rgb_effects.yaml 
-Home Assistant buttons card for activing RGB dynamic effects and creating custom effects patterns. Uses recreation of the Aqara Home app preset effect patterns as examples: Dinner, Sunset, Autumn, Galaxy, Daydream, Holiday, Party, Meteor, Alert. 
+### aqara_t1m_ring_segments_script_examples.yaml
 
-### 1. Usage
+These call the blueprint with 12 examples based on the presets in the Aqara Home app. Requires the above blueprint aqara_t1m_ring_segments_blueprint.yaml
+
+1. Replace YOUR_LIGHT_NAME with your light's friendly name from Zigbee2MQTT
+2. Add the scripts code to your scripts.yaml
+      
+### aqara_t1m_ring_segments_card.yaml
+
+Simple dashboard buttons card example for activating RGB ring segment scripts. Requires aqara_t1m_ring_segments_script_examples.yaml and aqara_t1m_ring_segments_blueprint.yaml
+
 1. Edit your Home Assistant dashboard
 2. Click **Add Card** → **Manual**
-3. Copy and paste the YAML into the editor
-4. **IMPORTANT**: Replace `YOUR_LIGHT_NAME` with your actual device friendly name from Zigbee2MQTT, NOT the Home Assistant entity name
-6. Save the card
+3. Copy and paste in the YAML code
+4. For brightness slider create an Input Helper via Home Assistant UI
+    1. Settings → Devices & Services → Helpers
+    2. Create Number helper:
+       - Name: `t1m_preset_brightness`
+       - Min: 1
+       - Max: 100
+       - Step: 1
 
-### 2. Creating Custom Effects
+### aqara_t1m_ring_segments_card_custom_icons.yaml
 
-Copy an existing button from the yaml and modify these parameters:
-```
-name: My Custom Effect
-icon: mdi:myicon
-topic: zigbee2mqtt/YOUR_LIGHT_NAME/set
-payload: '{"rgb_effect":"breathing","rgb_effect_colors":"#ffaa00,#00aaff","rgb_effect_brightness":100,"rgb_effect_speed":30}'
-```
-Payload parameters:
+Dashboard buttons card example with custom icons for activating RGB ring segment scripts.  Requires aqara_t1m_ring_segments_script_examples.yaml and aqara_t1m_ring_segments_blueprint.yaml
 
-**rgb_effect**
-```
-One of the following:
+**Uses hass-custom_icons** - https://github.com/thomasloven/hass-custom_icons
 
-flow1
-flow2
-fading
-hopping
-breathing
-rolling
-off
-```
+1. Place icons in folder custom_icons/t1m_icons 
+2. Edit your Home Assistant dashboard
+3. Click **Add Card** → **Manual**
+4. Copy and paste in the YAML code
+5. For brightness slider create an Input Helper via Home Assistant UI
+    1. Settings → Devices & Services → Helpers
+    2. Create Number helper:
+       - Name: `t1m_preset_brightness`
+       - Min: 1
+       - Max: 100
+       - Step: 1
 
-**rgb_effect_colors**
-```
-Comma seperated list of RGB hex values, between 1 and 8 different colors, for example
+## RGB Ring Dynamic Effect Patterns
 
-#ff0000,#00ff00,#0000ff
+### aqara_t1m_ring_effects_blueprint.yaml
+Home Assistant script blueprint for custom RGB ring light dynamic effects.
 
-for red,green,blue
-```
+#### 1. Import the Blueprint
+1. In Home Assistant, go to **Settings** → **Automations & Scenes** → **Blueprints**
+2. Click the **Import Blueprint** button
+3. Paste the URL to this blueprint file or upload it directly
+4. Click **Preview** and then **Import**
 
-**rgb_effect_brightness**
-```
-number between 1 and 100, representing brightness %
-```
+#### 2. Create a Script from the Blueprint
+1. Go to **Settings** → **Automations & Scenes** → **Scripts**
+2. Click **Add Script** → **Create new script from blueprint**
+3. Select **Aqara T1M - RGB Ring Effect Script**
+4. Configure the script:
+   - **Name**: Give it a descriptive name (e.g., "T1M Custom Ring Pattern")
+   - **Device Name**: Enter your T1M light's friendly name from Zigbee2MQTT (e.g., "Living Room Light")
+     - This is the name shown in the Zigbee2MQTT web interface, NOT the Home Assistant entity name
+     - You can find this in Zigbee2MQTT → Devices → your light
+   - **RGB Effect**: Select the dynamic effect to use
+   - **Number of colors**: Set the number of color pickers the effect pattern will use
+   - **Color Pickers**: Configure the number of color pickers selected in the step above.
+   - **Effect Brightnes**: Percentage between 1 and 100
+   - **Effect Speed**: Percentage between 1 and 100
+5. Save the script
 
-**rgb_effect_speed**
-```
-number between 1 and 100, representing speed %
-```
-### 3. Stopping Effects
+#### 3. Running a created script Script
+Once created, you can run a script in several ways:
+
+1. **Manually**: Go to **Settings** → **Automations & Scenes** → **Scripts** and run it
+2. **Dashboard Button**: Add a script button to your dashboard
+3. **Automation**: Trigger it from an automation
+
+### aqara_t1m_ring_effects_script_examples.yaml
+
+These call the blueprint with 9 examples based on the presets in the Aqara Home app: Dinner, Sunset, Autumn, Galaxy, Daydream, Holiday, Party, Meteor, Alert.
+
+1. Replace YOUR_LIGHT_NAME with your light's friendly name from Zigbee2MQTT
+2. Add the scripts code to your scripts.yaml
+
+### aqara_t1m_ring_effects_card.yaml
+
+Simple dashboard buttons card example for activating RGB dynamic effects scripts. Requires aqara_t1m_ring_effects_script_examples.yaml and aqara_t1m_ring_effects_blueprint.yaml
+
+1. Edit your Home Assistant dashboard
+2. Click **Add Card** >> **Manual**
+3. Copy and paste in the YAML code
+4. For the "Stop" button, replace YOUR_LIGHT_NAME with your light's friendly name from Zigbee2MQTT
+
+### Stopping Effects
 Click the **Stop Effects** button to turn off the dynamic effect, or
 
 Click any static preset button, or
 
-Adjust segments manually, or
+Adjust ring light settings manually or with automation, or
 
 Turn the light off/on
-
-### 4. Using effects in automations
-1. Create a new automation
-2. Set up a trigger as usual
-3. For **Then do** click **Add action** then select **MQTT** → **Publish**
-4. **Topic**: ```zigbee2mqtt/YOUR_LIGHT_NAME/set``` (replacing YOUR_LIGHT_NAME as above)
-5. Tick **Payload**
-6. Enter your effect parameters as above into the payload text box. For example to trigger a red flashing alert:
-   ```{"rgb_effect":"hopping","rgb_effect_colors":"#ff0000","rgb_effect_brightness":100,"rgb_effect_speed":100}```
-7. Save and trigger the automation as usual
 
 ## Notes
   
