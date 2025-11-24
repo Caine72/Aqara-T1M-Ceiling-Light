@@ -1,75 +1,21 @@
-## Aqara T1M Ceiling Light RGB Dynamic Effects Presets
+## Aqara T1M RGB Ring Dynamic Effects
 ## Home Assistant card example
-## These preset buttons activate replications of the preset RGB dynamic effect scenes from the Aqara Home app
 ##
+## These buttons activate replications of the preset RGB dynamic effect scenes from the Aqara Home app
 ##
 ## Installation
-## 
-## 1. Edit your Home Assistant dashboard
-## 2. Click **Add Card** >> **Manual**
-## 3. Copy the YAML from below
-## 4. **IMPORTANT**: Replace `YOUR_LIGHT_NAME` with your actual device friendly name from Zigbee2MQTT, NOT the Home Assistant device name
-## 5. Save the card
-##
-##
-## Effect Types
-##
-## Flow 1 & Flow 2:
-##  Colors smoothly transition from one to the next in a continuous loop. Flow 1 is clockwise, Flow 2 anti-clockwise
-##
-## Fading:
-##  Colors fade in and out, creating a gentle pulsing effect between colors.
-##
-## Hopping:
-##  Colors jump/switch instantly between colors with no transition.
-##
-## Breathing:
-##  Colors pulse like breathing - getting brighter then dimmer rhythmically.
-##
-## Rolling:
-##  Colors rotate around the ring in a spinning motion.
-##
-## Stopping Effects:
-## - Click the **Stop Effects** button to turn off the dynamic effect, or
-## - Click any static preset button, or
-## - Adjust segments manually, or
-## - Turn the light off/on
-## 
-##
-## Creating Custom Effects
-##
-## Copy an existing button and modify:
-##
-##  name: My Custom Effect
-##  icon: mdi:creation
-##  topic: zigbee2mqtt/YOUR_LIGHT_NAME/set
-##  payload: '{"rgb_effect":"breathing","rgb_effect_colors":"#ffaa00,#00aaff","rgb_effect_brightness":100,"rgb_effect_speed":30}'
-##
-## rgb_effect
-## flow1      // Smooth flowing transition
-## flow2      // Alternate flowing pattern  
-## fading     // Fade in/out
-## hopping    // Jump between colors
-## breathing  // Pulse effect
-## rolling    // Rotate around ring
-## off        // Stop effects
-##
-## rgb_effect_colors
-## - Comma seperated list of RGB hex values, up to 8 colors
-## - Minimum: 1 color
-## - Maximum: 8 colors
-##
-## rgb_effect_brightness
-## - between 1 and 100, representing bightness %
-##
-## rgb_effect_speed
-## - between 1 and 100, representing speed %
+## 1. Install the blueprint aqara_t1m_ring_effects_blueprint.yaml
+## 2. Replace YOUR_LIGHT_NAME with your light friendly name from Zigbee2MQTT
+## 3. Add the effect scripts from aqara_t1m_ring_effects_script_examples.yaml to your scripts.yaml
+## 4. Edit your Home Assistant dashboard
+## 5. Click **Add Card** >> **Manual**
+## 6. Copy the YAML from below
 
 type: vertical-stack
 cards:
   - type: markdown
     content: |
-      ## T1M RGB Effects
+      ## T1M RGB Ring Dynamic Effects
       
   - type: grid
     columns: 3
@@ -80,90 +26,81 @@ cards:
         icon: mdi:silverware-fork-knife
         tap_action:
           action: call-service
-          service: mqtt.publish
-          data:
-            topic: zigbee2mqtt/YOUR_LIGHT_NAME/set
-            payload: '{"rgb_effect":"flow1","rgb_effect_colors":"#d6ebff,#5c56ff,#5d00ff","rgb_effect_brightness":100,"rgb_effect_speed":75}'
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_dinner
         
       - type: button
         name: Sunset
         icon: mdi:weather-sunset
         tap_action:
           action: call-service
-          service: mqtt.publish
-          data:
-            topic: zigbee2mqtt/YOUR_LIGHT_NAME/set
-            payload: '{"rgb_effect":"flow2","rgb_effect_colors":"#ff0000,#ff8a8a,#b3bfff,#0000ff","rgb_effect_brightness":100,"rgb_effect_speed":10}'
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_sunset
         
       - type: button
         name: Autumn
         icon: mdi:leaf-maple
         tap_action:
           action: call-service
-          service: mqtt.publish
-          data:
-            topic: zigbee2mqtt/YOUR_LIGHT_NAME/set
-            payload: '{"rgb_effect":"flow1","rgb_effect_colors":"#ff4700,#ff7700,#ff9a00,#ffe100","rgb_effect_brightness":100,"rgb_effect_speed":60}'
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_autumn
 
       - type: button
         name: Galaxy
         icon: mdi:creation
         tap_action:
           action: call-service
-          service: mqtt.publish
-          data:
-            topic: zigbee2mqtt/YOUR_LIGHT_NAME/set
-            payload: '{"rgb_effect":"fading","rgb_effect_colors":"#0089ff,#c600ff,#ff00ff,#0000ff","rgb_effect_brightness":100,"rgb_effect_speed":40}'
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_galaxy
         
       - type: button
         name: Daydream
         icon: mdi:weather-cloudy
         tap_action:
           action: call-service
-          service: mqtt.publish
-          data:
-            topic: zigbee2mqtt/YOUR_LIGHT_NAME/set
-            payload: '{"rgb_effect":"fading","rgb_effect_colors":"#ff0000,#ff9b8f,#ff00ff,#ffa3f9","rgb_effect_brightness":100,"rgb_effect_speed":70}'
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_daydream
         
       - type: button
         name: Holiday
         icon: mdi:party-popper
         tap_action:
           action: call-service
-          service: mqtt.publish
-          data:
-            topic: zigbee2mqtt/YOUR_LIGHT_NAME/set
-            payload: '{"rgb_effect":"breathing","rgb_effect_colors":"#07ff24,#ff6100,#37b8ff,#0006ff","rgb_effect_brightness":100,"rgb_effect_speed":10}'
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_holiday
 
       - type: button
         name: Party
         icon: mdi:balloon
         tap_action:
           action: call-service
-          service: mqtt.publish
-          data:
-            topic: zigbee2mqtt/YOUR_LIGHT_NAME/set
-            payload: '{"rgb_effect":"hopping","rgb_effect_colors":"#ff0000,#ff5e00,#ffff00,#ff00ff,#00ffff,#0000ff,#ff00ff","rgb_effect_brightness":100,"rgb_effect_speed":50}'
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_party
         
       - type: button
         name: Meteor
         icon: mdi:meteor
         tap_action:
           action: call-service
-          service: mqtt.publish
-          data:
-            topic: zigbee2mqtt/YOUR_LIGHT_NAME/set
-            payload: '{"rgb_effect":"rolling","rgb_effect_colors":"#ff9400,#59ff00,#00fffc,#af07ff","rgb_effect_brightness":100,"rgb_effect_speed":50}'
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_meteor
         
       - type: button
         name: Alert
         icon: mdi:alert-circle
         tap_action:
           action: call-service
-          service: mqtt.publish
-          data:
-            topic: zigbee2mqtt/YOUR_LIGHT_NAME/set
-            payload: '{"rgb_effect":"hopping","rgb_effect_colors":"#ff0000","rgb_effect_brightness":100,"rgb_effect_speed":100}'
+          service: script.turn_on
+          target:
+            entity_id: script.t1m_effect_alert
 
   - type: button
     name: Stop Effects
