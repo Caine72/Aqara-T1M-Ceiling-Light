@@ -385,19 +385,15 @@ const definition = {
                 const ATTR_RGB_EFFECT_TYPE = 0x051f;
                 const ATTR_RGB_EFFECT_SPEED = 0x0520;
 
+                // Send effect type to 0x051f (32-bit uint)
+                await entity.write("manuSpecificLumi", {[ATTR_RGB_EFFECT_TYPE]: {value: effectId, type: 0x23}}, {manufacturerCode});
+
                 // Send colors to 0x0527
                 await entity.write(
                     "manuSpecificLumi",
                     {[ATTR_RGB_COLORS]: {value: msg1, type: 0x41}},
                     {manufacturerCode, disableDefaultResponse: false},
                 );
-
-                await new Promise((resolve) => setTimeout(resolve, 100));
-
-                // Send effect type to 0x051f (32-bit uint)
-                await entity.write("manuSpecificLumi", {[ATTR_RGB_EFFECT_TYPE]: {value: effectId, type: 0x23}}, {manufacturerCode});
-
-                await new Promise((resolve) => setTimeout(resolve, 100));
 
                 // Send speed to 0x0520 (8-bit uint)
                 await entity.write("manuSpecificLumi", {[ATTR_RGB_EFFECT_SPEED]: {value: speed, type: 0x20}}, {manufacturerCode});
