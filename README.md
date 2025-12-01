@@ -28,6 +28,9 @@ Colors rotate around the ring in a spinning motion.
 *Colors:* Between 1 and 8 colors can be set for each effect. The color slots are defined by a comma seperated list of RGB hex values, e.g. #ff0000,#00ff00,#0000ff for red, green, blue. 
 
 ## Installation
+
+*Requires Zigbee2MQTT 2.6.4*
+
 In Zigbee2MQTT go to **settings** → **dev console** → **external converters**, create a new converter named **t1m.mjs** and paste in the contents of the file. Click save then restart Zigbee2MQTT via **settings** → **tools**
 
 Alternatively place the file **t1m.mjs** in the folder **zigbee2mqtt/data/external_converters** and restart Zigbee2MQTT.
