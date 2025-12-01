@@ -139,10 +139,10 @@ const definition = {
             zigbeeCommandOptions: {manufacturerCode},
         }),
 
-        lumi.lumiModernExtend.lumiDimmingRangeMin(),
-        lumi.lumiModernExtend.lumiDimmingRangeMax(),
-        lumi.lumiModernExtend.lumiOffOnDuration(),
-        lumi.lumiModernExtend.lumiOnOffDuration(),
+        lumiModernExtend.lumiDimmingRangeMin(),
+        lumiModernExtend.lumiDimmingRangeMax(),
+        lumiModernExtend.lumiOffOnDuration(),
+        lumiModernExtend.lumiOnOffDuration(),
 
         m.enumLookup({
             name: "rgb_effect",
