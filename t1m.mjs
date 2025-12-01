@@ -115,7 +115,6 @@ const definition = {
         await endpoint.read("manuSpecificLumi", [0x0516], {manufacturerCode}); // dimming_range_maximum
         await endpoint.read("genLevelCtrl", [0x0012], {}); // off_on_duration
         await endpoint.read("genLevelCtrl", [0x0013], {}); // on_off_duration
-        await endpoint.read("manuSpecificLumi", [0x0517], {manufacturerCode}); // power_on_behaviour
     },
 
     extend: [
@@ -140,61 +139,10 @@ const definition = {
             zigbeeCommandOptions: {manufacturerCode},
         }),
 
-        m.numeric({
-            name: "off_on_duration",
-            label: "Off to On dimming duration",
-            cluster: "genLevelCtrl",
-            attribute: {ID: 0x0012, type: 0x21},
-            description: "The light will gradually brighten according to the set duration",
-            entityCategory: "config",
-            unit: "s",
-            valueMin: 0,
-            valueMax: 10,
-            valueStep: 0.5,
-            scale: 10,
-        }),
-
-        m.numeric({
-            name: "on_off_duration",
-            label: "On to Off dimming duration",
-            cluster: "genLevelCtrl",
-            attribute: {ID: 0x0013, type: 0x21},
-            description: "The light will gradually dim according to the set duration",
-            entityCategory: "config",
-            unit: "s",
-            valueMin: 0,
-            valueMax: 10,
-            valueStep: 0.5,
-            scale: 10,
-        }),
-
-        m.numeric({
-            name: "dimming_range_minimum",
-            label: "Dimming Range Minimum",
-            cluster: "manuSpecificLumi",
-            attribute: {ID: 0x0515, type: 0x20},
-            description: "Minimum Allowed Dimming Value",
-            entityCategory: "config",
-            zigbeeCommandOptions: {manufacturerCode},
-            unit: "%",
-            valueMin: 1,
-            valueMax: 100,
-            valueStep: 1,
-        }),
-
-        m.numeric({
-            name: "dimming_range_maximum",
-            label: "Dimming Range Maximum",
-            cluster: "manuSpecificLumi",
-            attribute: {ID: 0x0516, type: 0x20},
-            description: "Maximum Allowed Dimming Value",
-            entityCategory: "config",
-            zigbeeCommandOptions: {manufacturerCode},
-            unit: "%",
-            valueMin: 1,
-            valueMax: 100,
-            valueStep: 1,
-        }),
+        lumi.lumiModernExtend.lumiDimmingRangeMin(),
+        lumi.lumiModernExtend.lumiDimmingRangeMax(),
+        lumi.lumiModernExtend.lumiOffOnDuration(),
+        lumi.lumiModernExtend.lumiOnOffDuration(),
 
         m.enumLookup({
             name: "rgb_effect",
@@ -336,8 +284,11 @@ const definition = {
                     }
                 }
 
+                // Determine correct state key based on endpoint name
+                const stateKey = meta.endpoint_name ? `state_${meta.endpoint_name}` : "state";
+
                 // Update state - ring light state turns on when segments are activated
-                return {state: {ring_segments: value, state_rgb: "ON"}};
+                return {state: {ring_segments: value, [stateKey]: "ON"}};
             },
         },
         {
@@ -382,31 +333,16 @@ const definition = {
                     {manufacturerCode, disableDefaultResponse: false},
                 );
 
-                // Update state - ring light turns on when effects are activated
+                // Determine correct state key based on endpoint name
+                const stateKey = meta.endpoint_name ? `state_${meta.endpoint_name}` : "state";
+
                 return {
                     state: {
                         rgb_effect_colors: colors,
                         rgb_effect_brightness: brightnessPercent,
-                        state_rgb: "ON",
+                        [stateKey]: "ON",
                     },
                 };
-            },
-        },
-        {
-            key: ["dimming_range_minimum", "dimming_range_maximum"],
-            convertSet: async (entity, key, value, meta) => {
-                // Validate that min doesn't exceed max
-                const newMin = key === "dimming_range_minimum" ? value : meta.state.dimming_range_minimum;
-                const newMax = key === "dimming_range_maximum" ? value : meta.state.dimming_range_maximum;
-
-                if (newMin !== undefined && newMax !== undefined && newMin > newMax) {
-                    throw new Error(`Minimum (${newMin}%) cannot exceed maximum (${newMax}%)`);
-                }
-
-                const attrId = key === "dimming_range_minimum" ? 0x0515 : 0x0516;
-                await entity.write("manuSpecificLumi", {[attrId]: {value, type: 0x20}}, {manufacturerCode});
-
-                return {state: {[key]: value}};
             },
         },
     ],
