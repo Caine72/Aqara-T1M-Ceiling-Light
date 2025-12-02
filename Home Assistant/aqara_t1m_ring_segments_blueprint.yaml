@@ -214,7 +214,6 @@ blueprint:
         color_rgb:
 
 sequence:
-sequence:
   - variables:
       device_name: !input device_name
       brightness: !input global_brightness
