@@ -112,13 +112,13 @@ Dashboard buttons card example with custom icons for activating RGB ring segment
 
 ## RGB Ring Dynamic Effect Patterns
 
-### aqara_t1m_ring_effects_blueprint.yaml
+### aqara_t1m_rgb_effects_blueprint.yaml
 Home Assistant script blueprint for custom RGB ring light dynamic effects.
 
 #### 1. Import the Blueprint
 1. In Home Assistant, go to **Settings** → **Automations & Scenes** → **Blueprints**
 2. Click the **Import Blueprint** button
-3. Paste the URL to this blueprint file or upload it directly
+3. Paste the URL to this blueprint file or upload it directly to blueprints/script/aqara/aqara_t1m_rgb_effects_blueprint.yaml
 4. Click **Preview** and then **Import**
 
 #### 2. Create a Script from the Blueprint
@@ -127,9 +127,8 @@ Home Assistant script blueprint for custom RGB ring light dynamic effects.
 3. Select **Aqara T1M - RGB Ring Effect Script**
 4. Configure the script:
    - **Name**: Give it a descriptive name (e.g., "T1M Custom Ring Pattern")
-   - **Device Name**: Enter your T1M light's friendly name from Zigbee2MQTT (e.g., "Living Room Light")
-     - This is the name shown in the Zigbee2MQTT web interface, NOT the Home Assistant entity name
-     - You can find this in Zigbee2MQTT → Devices → your light
+   - **Target Lights**: Select one or more T1M target RGB enitities/devices, (e.g., light.ceiling_light_rgb)
+   - **Zigbee2MQTT Base Topic**: Only needs to be changed if you have a non-standard Zigbee2MQTT installation
    - **RGB Effect**: Select the dynamic effect to use
    - **Number of colors**: Set the number of color pickers the effect pattern will use
    - **Color Pickers**: Configure the number of color pickers selected in the step above.
@@ -144,21 +143,21 @@ Once created, you can run a script in several ways:
 2. **Dashboard Button**: Add a script button to your dashboard
 3. **Automation**: Trigger it from an automation
 
-### aqara_t1m_ring_effects_script_examples.yaml
+### aqara_t1m_rgb_effects_script_examples.yaml
 
 These call the blueprint with 9 examples based on the presets in the Aqara Home app: Dinner, Sunset, Autumn, Galaxy, Daydream, Holiday, Party, Meteor, Alert.
 
-1. Replace YOUR_LIGHT_NAME with your light's friendly name from Zigbee2MQTT
+1. Replace light.your_t1m_light with your light's actual RGB entity ID
 2. Add the scripts code to your scripts.yaml
 
-### aqara_t1m_ring_effects_card.yaml
+### aqara_t1m_rgb_effects_card.yaml
 
-Simple dashboard buttons card example for activating RGB dynamic effects scripts. Requires aqara_t1m_ring_effects_script_examples.yaml and aqara_t1m_ring_effects_blueprint.yaml
+Simple dashboard buttons card example for activating RGB dynamic effects scripts. Requires aqara_t1m_rgb_effects_script_examples.yaml and aqara_t1m_rgb_effects_blueprint.yaml
 
 1. Edit your Home Assistant dashboard
 2. Click **Add Card** >> **Manual**
 3. Copy and paste in the YAML code
-4. For the "Stop" button, replace YOUR_LIGHT_NAME with your light's friendly name from Zigbee2MQTT
+4. For the "Stop" button, replace light.your_t1m_light with your light's actual RGB entity ID
 
 ### Stopping Effects
 Click the **Stop Effects** button to turn off the dynamic effect, or
@@ -168,6 +167,12 @@ Click any static preset button, or
 Adjust ring light settings manually or with automation, or
 
 Turn the light off/on
+
+### Finding Your Light Entity ID
+Settings → Devices & Services
+Click your Zigbee2MQTT integration
+Find your T1M light
+Note the entity ID (e.g., light.ceiling_light_rgb)
 
 ## Notes
   
