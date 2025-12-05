@@ -248,7 +248,7 @@ sequence:
     data:
       topic: "zigbee2mqtt/{{ device_name }}/set"
       payload: >
-        {"ring_segments_brightness": {{ brightness }}}
+        {"segment_brightness": {{ brightness }}}
   
   # Step 2: Wait briefly for brightness to be set in state
   - delay:
