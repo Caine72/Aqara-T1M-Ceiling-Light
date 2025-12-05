@@ -260,7 +260,7 @@ sequence:
       topic: "zigbee2mqtt/{{ device_name }}/set"
       payload: >
         {
-          "ring_segments": [
+          "segment_colors": [
             {"segment": 1, "color": "#{{ '%02x%02x%02x' | format(c01[0], c01[1], c01[2]) }}"},
             {"segment": 2, "color": "#{{ '%02x%02x%02x' | format(c02[0], c02[1], c02[2]) }}"},
             {"segment": 3, "color": "#{{ '%02x%02x%02x' | format(c03[0], c03[1], c03[2]) }}"},
