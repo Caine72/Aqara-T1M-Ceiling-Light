@@ -1,21 +1,31 @@
 ## Aqara T1M RGB Ring Segments
 ## Home Assistant script blueprint
 ##
-## Install to blueprints/script/aqara_t1m/aqara_t1m_ring_segments_blueprint.yaml
+## Install to blueprints/script/aqara/aqara_t1m_ring_segments_blueprint.yaml
 
 blueprint:
   name: Aqara T1M - RGB Ring Segments Script
   description: >
     Script blueprint to control each of the 26 individual ring segments on the Aqara T1M Ceiling Light ring with custom colors. 
     Each segment can be set to any color using a color picker, set the color to black (000) to turn off a segment.
+    Supports multiple lights.
   domain: script
   input:
-    device_name:
-      name: Device Name
+    target_lights:
+      name: Target Lights
       description: >
-        The friendly name of your Aqara T1M light as configured in Zigbee2MQTT.
-        This is the name that appears in the Zigbee2MQTT web interface, NOT the Home Assistant entity name.
-      default: "Living Room Ceiling Light"
+        Select one or more T1M lights or devices.
+      selector:
+        target:
+          entity:
+            - domain: light
+          device:
+            - integration: mqtt
+
+    z2m_base_topic:
+      name: Zigbee2MQTT Base Topic
+      description: The base MQTT topic for your Zigbee2MQTT instance
+      default: "zigbee2mqtt"
       selector:
         text:
     
@@ -215,7 +225,8 @@ blueprint:
 
 sequence:
   - variables:
-      device_name: !input device_name
+      z2m_base_topic: !input z2m_base_topic
+      target_lights: !input target_lights
       brightness: !input global_brightness
       c01: !input color_01
       c02: !input color_02
@@ -243,51 +254,79 @@ sequence:
       c24: !input color_24
       c25: !input color_25
       c26: !input color_26
-  # Step 1: Set the global brightness for all ring segments
-  - service: mqtt.publish
-    data:
-      topic: "zigbee2mqtt/{{ device_name }}/set"
-      payload: >
-        {"segment_brightness": {{ brightness }}}
   
-  # Step 2: Wait briefly for brightness to be set in state
-  - delay:
-      milliseconds: 100
-  
-  # Step 3: Set the ring segment colors (brightness is read from state)
-  - service: mqtt.publish
-    data:
-      topic: "zigbee2mqtt/{{ device_name }}/set"
-      payload: >
-        {
-          "segment_colors": [
-            {"segment": 1, "color": "#{{ '%02x%02x%02x' | format(c01[0], c01[1], c01[2]) }}"},
-            {"segment": 2, "color": "#{{ '%02x%02x%02x' | format(c02[0], c02[1], c02[2]) }}"},
-            {"segment": 3, "color": "#{{ '%02x%02x%02x' | format(c03[0], c03[1], c03[2]) }}"},
-            {"segment": 4, "color": "#{{ '%02x%02x%02x' | format(c04[0], c04[1], c04[2]) }}"},
-            {"segment": 5, "color": "#{{ '%02x%02x%02x' | format(c05[0], c05[1], c05[2]) }}"},
-            {"segment": 6, "color": "#{{ '%02x%02x%02x' | format(c06[0], c06[1], c06[2]) }}"},
-            {"segment": 7, "color": "#{{ '%02x%02x%02x' | format(c07[0], c07[1], c07[2]) }}"},
-            {"segment": 8, "color": "#{{ '%02x%02x%02x' | format(c08[0], c08[1], c08[2]) }}"},
-            {"segment": 9, "color": "#{{ '%02x%02x%02x' | format(c09[0], c09[1], c09[2]) }}"},
-            {"segment": 10, "color": "#{{ '%02x%02x%02x' | format(c10[0], c10[1], c10[2]) }}"},
-            {"segment": 11, "color": "#{{ '%02x%02x%02x' | format(c11[0], c11[1], c11[2]) }}"},
-            {"segment": 12, "color": "#{{ '%02x%02x%02x' | format(c12[0], c12[1], c12[2]) }}"},
-            {"segment": 13, "color": "#{{ '%02x%02x%02x' | format(c13[0], c13[1], c13[2]) }}"},
-            {"segment": 14, "color": "#{{ '%02x%02x%02x' | format(c14[0], c14[1], c14[2]) }}"},
-            {"segment": 15, "color": "#{{ '%02x%02x%02x' | format(c15[0], c15[1], c15[2]) }}"},
-            {"segment": 16, "color": "#{{ '%02x%02x%02x' | format(c16[0], c16[1], c16[2]) }}"},
-            {"segment": 17, "color": "#{{ '%02x%02x%02x' | format(c17[0], c17[1], c17[2]) }}"},
-            {"segment": 18, "color": "#{{ '%02x%02x%02x' | format(c18[0], c18[1], c18[2]) }}"},
-            {"segment": 19, "color": "#{{ '%02x%02x%02x' | format(c19[0], c19[1], c19[2]) }}"},
-            {"segment": 20, "color": "#{{ '%02x%02x%02x' | format(c20[0], c20[1], c20[2]) }}"},
-            {"segment": 21, "color": "#{{ '%02x%02x%02x' | format(c21[0], c21[1], c21[2]) }}"},
-            {"segment": 22, "color": "#{{ '%02x%02x%02x' | format(c22[0], c22[1], c22[2]) }}"},
-            {"segment": 23, "color": "#{{ '%02x%02x%02x' | format(c23[0], c23[1], c23[2]) }}"},
-            {"segment": 24, "color": "#{{ '%02x%02x%02x' | format(c24[0], c24[1], c24[2]) }}"},
-            {"segment": 25, "color": "#{{ '%02x%02x%02x' | format(c25[0], c25[1], c25[2]) }}"},
-            {"segment": 26, "color": "#{{ '%02x%02x%02x' | format(c26[0], c26[1], c26[2]) }}"}
-          ]
-        }
+  - repeat:
+      for_each: >
+        {% set ns = namespace(lights=[]) %}
+        {% if target_lights.entity_id is defined %}
+          {% if target_lights.entity_id is string %}
+            {% set ns.lights = [target_lights.entity_id] %}
+          {% else %}
+            {% set ns.lights = target_lights.entity_id %}
+          {% endif %}
+        {% endif %}
+        {% if target_lights.device_id is defined %}
+          {% if target_lights.device_id is string %}
+            {% set device_entities = device_entities(target_lights.device_id) | select('match', '^light\.') | list %}
+            {% set ns.lights = ns.lights + device_entities %}
+          {% else %}
+            {% for device_id in target_lights.device_id %}
+              {% set device_entities = device_entities(device_id) | select('match', '^light\.') | list %}
+              {% set ns.lights = ns.lights + device_entities %}
+            {% endfor %}
+          {% endif %}
+        {% endif %}
+        {{ ns.lights | unique | list }}
+      sequence:
+        - variables:
+            entity_device_id: "{{ device_id(repeat.item) }}"
+            z2m_device_name: "{{ device_attr(entity_device_id, 'name') }}"
+        
+        # Step 1: Set the global brightness for all ring segments
+        - service: mqtt.publish
+          data:
+            topic: "{{ z2m_base_topic }}/{{ z2m_device_name }}/set"
+            payload: >
+              {"segment_brightness": {{ brightness }}}
+        
+        # Step 2: Wait briefly for brightness to be set in state
+        - delay:
+            milliseconds: 100
+        
+        # Step 3: Set the ring segment colors (brightness is read from state)
+        - service: mqtt.publish
+          data:
+            topic: "{{ z2m_base_topic }}/{{ z2m_device_name }}/set"
+            payload: >
+              {
+                "segment_colors": [
+                  {"segment": 1, "color": "#{{ '%02x%02x%02x' | format(c01[0], c01[1], c01[2]) }}"},
+                  {"segment": 2, "color": "#{{ '%02x%02x%02x' | format(c02[0], c02[1], c02[2]) }}"},
+                  {"segment": 3, "color": "#{{ '%02x%02x%02x' | format(c03[0], c03[1], c03[2]) }}"},
+                  {"segment": 4, "color": "#{{ '%02x%02x%02x' | format(c04[0], c04[1], c04[2]) }}"},
+                  {"segment": 5, "color": "#{{ '%02x%02x%02x' | format(c05[0], c05[1], c05[2]) }}"},
+                  {"segment": 6, "color": "#{{ '%02x%02x%02x' | format(c06[0], c06[1], c06[2]) }}"},
+                  {"segment": 7, "color": "#{{ '%02x%02x%02x' | format(c07[0], c07[1], c07[2]) }}"},
+                  {"segment": 8, "color": "#{{ '%02x%02x%02x' | format(c08[0], c08[1], c08[2]) }}"},
+                  {"segment": 9, "color": "#{{ '%02x%02x%02x' | format(c09[0], c09[1], c09[2]) }}"},
+                  {"segment": 10, "color": "#{{ '%02x%02x%02x' | format(c10[0], c10[1], c10[2]) }}"},
+                  {"segment": 11, "color": "#{{ '%02x%02x%02x' | format(c11[0], c11[1], c11[2]) }}"},
+                  {"segment": 12, "color": "#{{ '%02x%02x%02x' | format(c12[0], c12[1], c12[2]) }}"},
+                  {"segment": 13, "color": "#{{ '%02x%02x%02x' | format(c13[0], c13[1], c13[2]) }}"},
+                  {"segment": 14, "color": "#{{ '%02x%02x%02x' | format(c14[0], c14[1], c14[2]) }}"},
+                  {"segment": 15, "color": "#{{ '%02x%02x%02x' | format(c15[0], c15[1], c15[2]) }}"},
+                  {"segment": 16, "color": "#{{ '%02x%02x%02x' | format(c16[0], c16[1], c16[2]) }}"},
+                  {"segment": 17, "color": "#{{ '%02x%02x%02x' | format(c17[0], c17[1], c17[2]) }}"},
+                  {"segment": 18, "color": "#{{ '%02x%02x%02x' | format(c18[0], c18[1], c18[2]) }}"},
+                  {"segment": 19, "color": "#{{ '%02x%02x%02x' | format(c19[0], c19[1], c19[2]) }}"},
+                  {"segment": 20, "color": "#{{ '%02x%02x%02x' | format(c20[0], c20[1], c20[2]) }}"},
+                  {"segment": 21, "color": "#{{ '%02x%02x%02x' | format(c21[0], c21[1], c21[2]) }}"},
+                  {"segment": 22, "color": "#{{ '%02x%02x%02x' | format(c22[0], c22[1], c22[2]) }}"},
+                  {"segment": 23, "color": "#{{ '%02x%02x%02x' | format(c23[0], c23[1], c23[2]) }}"},
+                  {"segment": 24, "color": "#{{ '%02x%02x%02x' | format(c24[0], c24[1], c24[2]) }}"},
+                  {"segment": 25, "color": "#{{ '%02x%02x%02x' | format(c25[0], c25[1], c25[2]) }}"},
+                  {"segment": 26, "color": "#{{ '%02x%02x%02x' | format(c26[0], c26[1], c26[2]) }}"}
+                ]
+              }
 
 mode: single
