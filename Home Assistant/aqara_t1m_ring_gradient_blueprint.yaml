@@ -42,46 +42,46 @@ blueprint:
     use_gradient:
       name: Use Gradient
       description: If enabled, creates smooth color transitions. If disabled, applies solid color blocks.
-      default: false
+      default: true
       selector:
         boolean:
     
-    color_01:
+    color_1:
       name: Color 1
       description: First color
       default: [255, 0, 0]
       selector:
         color_rgb:
 
-    color_02:
+    color_2:
       name: Color 2
       description: Second color
       default: [0, 255, 0]
       selector:
         color_rgb:
 
-    color_03:
+    color_3:
       name: Color 3
       description: Third color
       default: [0, 0, 255]
       selector:
         color_rgb:
 
-    color_04:
+    color_4:
       name: Color 4
       description: Fourth color
       default: [255, 255, 0]
       selector:
         color_rgb:
 
-    color_05:
+    color_5:
       name: Color 5
       description: Fifth color
       default: [255, 0, 255]
       selector:
         color_rgb:
 
-    color_06:
+    color_6:
       name: Color 6
       description: Sixth color
       default: [0, 255, 255]
@@ -94,20 +94,17 @@ sequence:
       target_lights: !input target_lights
       number_of_colors: !input number_of_colors
       use_gradient: !input use_gradient
-      color_01: !input color_01
-      color_02: !input color_02
-      color_03: !input color_03
-      color_04: !input color_04
-      color_05: !input color_05
-      color_06: !input color_06
+      color_1: !input color_1
+      color_2: !input color_2
+      color_3: !input color_3
+      color_4: !input color_4
+      color_5: !input color_5
+      color_6: !input color_6
   
   - variables:
-      # T1M ring has fixed 26 segments
-      segment_count: 26
-      
       # Build array of selected colors
       all_colors: >
-        {{ [color_01, color_02, color_03, color_04, color_05, color_06] }}
+        {{ [color_1, color_2, color_3, color_4, color_5, color_6] }}
       
       selected_colors: >
         {{ all_colors[:number_of_colors | int] }}
@@ -133,6 +130,17 @@ sequence:
             {% endfor %}
           {% endif %}
         {% endif %}
+        {% if target_lights.area_id is defined %}
+          {% if target_lights.area_id is string %}
+            {% set area_entities = area_entities(target_lights.area_id) | select('match', '^light\.') | list %}
+            {% set ns.lights = ns.lights + area_entities %}
+          {% else %}
+            {% for area_id in target_lights.area_id %}
+              {% set area_entities = area_entities(area_id) | select('match', '^light\.') | list %}
+              {% set ns.lights = ns.lights + area_entities %}
+            {% endfor %}
+          {% endif %}
+        {% endif %}
         {{ ns.lights | unique | list }}
       sequence:
         - variables:
@@ -148,9 +156,9 @@ sequence:
                 "segment_colors": [
                   {%- if use_gradient -%}
                     {# GRADIENT MODE: Smooth color transitions #}
-                    {%- for seg_idx in range(segment_count | int) -%}
-                      {%- set total_steps = (segment_count - 1) | float -%}
-                      {%- set position = seg_idx / total_steps if total_steps > 0 else 0 -%}
+                    {%- for seg_idx in range(26) -%}
+                      {%- set total_steps = 25.0 -%}
+                      {%- set position = seg_idx / total_steps -%}
                       {%- set color_range = (number_of_colors - 1) | float -%}
                       {%- set color_position = position * color_range -%}
                       {%- set color_index = color_position | int -%}
@@ -161,17 +169,17 @@ sequence:
                       {%- set r = ((color1[0] * (1 - blend)) + (color2[0] * blend)) | int -%}
                       {%- set g = ((color1[1] * (1 - blend)) + (color2[1] * blend)) | int -%}
                       {%- set b = ((color1[2] * (1 - blend)) + (color2[2] * blend)) | int -%}
-                      {"segment": {{ seg_idx + 1 }}, "color": "#{{ '%02x%02x%02x' | format(r, g, b) }}"}
+                      {"segment": {{ seg_idx + 1 }}, "color": {"r": {{ r }}, "g": {{ g }}, "b": {{ b }}}}
                       {%- if not loop.last -%},{%- endif -%}
                     {%- endfor -%}
                   {%- else -%}
                     {# SOLID MODE: Evenly divided color blocks #}
-                    {%- for seg_idx in range(segment_count | int) -%}
-                      {%- set segs_per_color = (segment_count / number_of_colors) | float -%}
+                    {%- for seg_idx in range(26) -%}
+                      {%- set segs_per_color = (26 / number_of_colors) | float -%}
                       {%- set color_index = (seg_idx / segs_per_color) | int -%}
                       {%- set color_index = [color_index, number_of_colors - 1] | min -%}
                       {%- set color = selected_colors[color_index] -%}
-                      {"segment": {{ seg_idx + 1 }}, "color": "#{{ '%02x%02x%02x' | format(color[0], color[1], color[2]) }}"}
+                      {"segment": {{ seg_idx + 1 }}, "color": {"r": {{ color[0] }}, "g": {{ color[1] }}, "b": {{ color[2] }}}}
                       {%- if not loop.last -%},{%- endif -%}
                     {%- endfor -%}
                   {%- endif -%}
