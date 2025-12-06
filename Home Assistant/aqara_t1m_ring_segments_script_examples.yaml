@@ -5,7 +5,7 @@
 ##
 ## Installation
 ## 1. Install the blueprint aqara_t1m_ring_segments_blueprint.yaml
-## 2. Replace YOUR_LIGHT_NAME with your light friendly name from Zigbee2MQTT
+## 2. Replace light.YOUR_LIGHT_ENTITY_ID with your light entity ID from Home Assistant
 ## 3. Add these scripts to your scripts.yaml
 ##
 ## For brightness slider create an Input Helper via Home Assistant UI
@@ -19,9 +19,10 @@
 t1m_preset_1:
   alias: T1M Preset 1
   use_blueprint:
-    path: aqara_t1m/aqara_t1m_ring_segments_blueprint.yaml
+    path: aqara/aqara_t1m_ring_segments_blueprint.yaml
     input:
-      device_name: YOUR_LIGHT_NAME
+      target_lights:
+        entity_id: light.YOUR_LIGHT_ENTITY_ID
       global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
       color_01: [255, 205, 213]
       color_02: [255, 205, 213]
@@ -53,9 +54,10 @@ t1m_preset_1:
 t1m_preset_2:
   alias: T1M Preset 2
   use_blueprint:
-    path: aqara_t1m/aqara_t1m_ring_segments_blueprint.yaml
+    path: aqara/aqara_t1m_ring_segments_blueprint.yaml
     input:
-      device_name: YOUR_LIGHT_NAME
+      target_lights:
+        entity_id: light.YOUR_LIGHT_ENTITY_ID
       global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
       color_01: [255, 235, 193]
       color_02: [255, 235, 193]
@@ -87,9 +89,10 @@ t1m_preset_2:
 t1m_preset_3:
   alias: T1M Preset 3
   use_blueprint:
-    path: aqara_t1m/aqara_t1m_ring_segments_blueprint.yaml
+    path: aqara/aqara_t1m_ring_segments_blueprint.yaml
     input:
-      device_name: YOUR_LIGHT_NAME
+      target_lights:
+        entity_id: light.YOUR_LIGHT_ENTITY_ID
       global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
       color_01: [129, 235, 254]
       color_02: [129, 235, 254]
@@ -121,9 +124,10 @@ t1m_preset_3:
 t1m_preset_4:
   alias: T1M Preset 4
   use_blueprint:
-    path: aqara_t1m/aqara_t1m_ring_segments_blueprint.yaml
+    path: aqara/aqara_t1m_ring_segments_blueprint.yaml
     input:
-      device_name: YOUR_LIGHT_NAME
+      target_lights:
+        entity_id: light.YOUR_LIGHT_ENTITY_ID
       global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
       color_01: [233, 202, 249]
       color_02: [233, 202, 249]
@@ -155,9 +159,10 @@ t1m_preset_4:
 t1m_preset_5:
   alias: T1M Preset 5
   use_blueprint:
-    path: aqara_t1m/aqara_t1m_ring_segments_blueprint.yaml
+    path: aqara/aqara_t1m_ring_segments_blueprint.yaml
     input:
-      device_name: YOUR_LIGHT_NAME
+      target_lights:
+        entity_id: light.YOUR_LIGHT_ENTITY_ID
       global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
       color_01: [255, 83, 74]
       color_02: [255, 83, 74]
@@ -190,9 +195,10 @@ t1m_preset_5:
 t1m_preset_6:
   alias: T1M Preset 6
   use_blueprint:
-    path: aqara_t1m/aqara_t1m_ring_segments_blueprint.yaml
+    path: aqara/aqara_t1m_ring_segments_blueprint.yaml
     input:
-      device_name: YOUR_LIGHT_NAME
+      target_lights:
+        entity_id: light.YOUR_LIGHT_ENTITY_ID
       global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
       color_01: [26, 152, 249]
       color_02: [26, 152, 249]
@@ -224,9 +230,10 @@ t1m_preset_6:
 t1m_preset_7:
   alias: T1M Preset 7
   use_blueprint:
-    path: aqara_t1m/aqara_t1m_ring_segments_blueprint.yaml
+    path: aqara/aqara_t1m_ring_segments_blueprint.yaml
     input:
-      device_name: YOUR_LIGHT_NAME
+      target_lights:
+        entity_id: light.YOUR_LIGHT_ENTITY_ID
       global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
       color_01: [167, 188, 255]
       color_02: [167, 188, 255]
@@ -258,9 +265,10 @@ t1m_preset_7:
 t1m_preset_8:
   alias: T1M Preset 8
   use_blueprint:
-    path: aqara_t1m/aqara_t1m_ring_segments_blueprint.yaml
+    path: aqara/aqara_t1m_ring_segments_blueprint.yaml
     input:
-      device_name: YOUR_LIGHT_NAME
+      target_lights:
+        entity_id: light.YOUR_LIGHT_ENTITY_ID
       global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
       color_01: [255, 221, 50]
       color_02: [255, 221, 50]
@@ -292,9 +300,10 @@ t1m_preset_8:
 t1m_preset_9:
   alias: T1M Preset 9
   use_blueprint:
-    path: aqara_t1m/aqara_t1m_ring_segments_blueprint.yaml
+    path: aqara/aqara_t1m_ring_segments_blueprint.yaml
     input:
-      device_name: YOUR_LIGHT_NAME
+      target_lights:
+        entity_id: light.YOUR_LIGHT_ENTITY_ID
       global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
       color_01: [255, 134, 160]
       color_02: [255, 134, 160]
@@ -326,9 +335,10 @@ t1m_preset_9:
 t1m_preset_10:
   alias: T1M Preset 10
   use_blueprint:
-    path: aqara_t1m/aqara_t1m_ring_segments_blueprint.yaml
+    path: aqara/aqara_t1m_ring_segments_blueprint.yaml
     input:
-      device_name: YOUR_LIGHT_NAME
+      target_lights:
+        entity_id: light.YOUR_LIGHT_ENTITY_ID
       global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
       color_01: [193, 129, 235]
       color_02: [193, 129, 235]
@@ -360,9 +370,10 @@ t1m_preset_10:
 t1m_preset_11:
   alias: T1M Preset 11
   use_blueprint:
-    path: aqara_t1m/aqara_t1m_ring_segments_blueprint.yaml
+    path: aqara/aqara_t1m_ring_segments_blueprint.yaml
     input:
-      device_name: YOUR_LIGHT_NAME
+      target_lights:
+        entity_id: light.YOUR_LIGHT_ENTITY_ID
       global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
       color_01: [45, 168, 249]
       color_02: [45, 168, 249]
@@ -394,9 +405,10 @@ t1m_preset_11:
 t1m_preset_12:
   alias: T1M Preset 12
   use_blueprint:
-    path: aqara_t1m/aqara_t1m_ring_segments_blueprint.yaml
+    path: aqara/aqara_t1m_ring_segments_blueprint.yaml
     input:
-      device_name: YOUR_LIGHT_NAME
+      target_lights:
+        entity_id: light.YOUR_LIGHT_ENTITY_ID
       global_brightness: "{{ states('input_number.t1m_preset_brightness') | int }}"
       color_01: [255, 170, 161]
       color_02: [255, 170, 161]
