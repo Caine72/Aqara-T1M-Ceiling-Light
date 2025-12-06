@@ -102,7 +102,7 @@ Once created, you can run a script in several ways:
 
 These call the blueprint with 12 examples based on the presets in the Aqara Home app. Requires the above blueprint aqara_t1m_ring_segments_blueprint.yaml
 
-1. Replace YOUR_LIGHT_NAME with your light's friendly name from Zigbee2MQTT
+1. Replace YOUR_LIGHT_NAME with your light's entity name
 2. Add the scripts code to your scripts.yaml
       
 ### aqara_t1m_ring_segments_card.yaml
