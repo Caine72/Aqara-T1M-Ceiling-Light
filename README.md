@@ -84,7 +84,7 @@ Home Assistant script blueprint to create color gradients or blocks evenly aroun
    - **Target Lights**: Select one or more T1M target enitities/devices, (e.g., light.my_t1m_light)
    - **Zigbee2MQTT Base Topic**: Only needs to be changed if you have a non-standard Zigbee2MQTT installation
    - **Number of Colors**: Select the number of colors to use for the gradient
-   - **Use Gradient**: If selected the colors will create a gradient between them over the strip length, if not selected solid color blocks will be created over the strip length
+   - **Use Gradient**: If selected the colors will create a gradient between them, if not selected solid color blocks will be created around the ring
    - **Color Pickers**: Configure each number of colors up specified above
 5. Save the script
 
