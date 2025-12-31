@@ -189,6 +189,16 @@ function lumiT1MEffect() {
 
                     const effectValue = lookup[value];
                     const endpoint = meta.device.getEndpoint(1);
+                     
+                    // Ensure RGB endpoint is switched on before starting effect.
+                    try {
+                        const rgbEndpoint = meta.device.getEndpoint(2);
+                        if (rgbEndpoint) {
+                            await rgbEndpoint.command('genOnOff', 'on', {}, {disableDefaultResponse: false});
+                        }
+                    } catch (err) {
+                        // If the endpoint is missing or the command fails, continue with the effect write.
+                    }
 
                     await endpoint.write(
                         "manuSpecificLumi",
